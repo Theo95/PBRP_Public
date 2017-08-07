@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script type="text/javascript" src="../../../../res/jquery-3.1.1.min.js"></script>
+    <link href="../../../../res/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../../../res/style.css" rel="stylesheet" />
+    <style>
+        .btn-default {
+            padding: 6px 6px;
+        }
+
+        .sizing-box {
+            height: 1.5vw;
+            width: 2vw;
+        }
+
+        #close-button{
+            font-weight:bolder;
+            font-size:2vw;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+            setTimeout(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            }, 1500);
+        });
+        function LoadVehicleList(data) {
+            var vehicleData = jQuery.parseJSON(data);
+            $('#vehicle-data').empty();
+            for (var i = 0; i < vehicleData.length; i++) {
+                $('#vehicle-data').append("<tr id='vehiclerepair-" + i + "'></tr>");
+
+                var dateOfRepair = new Date(vehicleData[i].RepairTime);
+                dateOfRepair.setHours(dateOfRepair.getHours() - 1);
+
+                var options = { year: '2-digit', month: '2-digit', day: '2-digit', hour: "2-digit", minute: "2-digit" };
+
+                $('#vehiclerepair-' + i).append("<td id='vehiclerepair-name-" + i + "'>" + vehicleData[i].Name + " (" + vehicleData[i].LicensePlate + ")</td>");
+                $('#vehiclerepair-' + i).append("<td id='vehiclerepair-cost-" + i + "'>$" + vehicleData[i].RepairCost + "</td>");
+                $('#vehiclerepair-' + i).append("<td id='vehiclerepair-date-" + i + "'>" + dateOfRepair.toLocaleString("en-GB", options) + "</td>");
+                $('#vehiclerepair-' + i).append("<td id='vehiclerepair-retrieve-" + i + "'><button class='btn btn-default'" + (vehicleData[i].RepairComplete ? "" : " disabled") + ">Retrieve</button></td>");
+
+                $('#vehiclerepair-retrieve-' + i).data("id", vehicleData[i].Id);
+                $('#vehiclerepair-retrieve-' + i).on("click", function (e) {
+                    resourceCall("retrieveVehicleGarage", $(this).data("id"));
+                });
+
+            }
+            if (vehicleData.length == 0) {
+                $('#vehicle-data').append("<tr id='vehiclerepair-0'><td>No vehicles to show</td><td></td><td></td><td></td></tr>");
+            }
+        }
+
+    </script>
+</head>
+
+<body style="background-color:transparent">
+    <div class="row" style="margin:0;margin-top:8vw;">
+        <div class="col-md-4" style="width:29.1666666666%"></div>
+        <div class="vehicle-main col-md-5">
+            <div class="vehicle-header">
+                <div id="close-button" class="pull-right" onclick="resourceCall('closeBusinessUI')">X</div>
+            </div>
+            <div class="vehicle-body">
+                <table id="vehicle-list" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width:40%">Vehicle Name</th>
+                            <th style="width:15%;">Cost</th>
+                            <th>Completion Time</th>
+                            <th class="text-center" style="width:15%"></th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="vehicle-data"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="../../res/jquery-3.1.1.min.js"></script>
+    <link href="../../res/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../res/style.css" rel="stylesheet" />
+
+    <style>
+        .container, body { text-align:left; }
+
+    </style>
+    <script type="text/javascript">
+        var itemId = 0;
+        var actions = null;
+        function displayActionItems(id, items)
+        {
+            actions = jQuery.parseJSON(items);
+
+            $('#main-con').css("height", (5 * actions.length) + "vw");
+
+            for (var i = 0; i < actions.length; i++)
+            {
+                $("#main-con").append("<div id='#action" + (i + 1) + "' class='actionButton'><p class='actionText'>" + actions[i] + "</p></div>");
+                itemId = id;
+
+            }
+
+            $('.actionButton').mousedown(function (e) {
+                SelectAction(parseInt($(this).attr("id").replace("#action", "")) - 1);
+            });
+            $("#main-con").append('<div class="actionButton" onclick="CancelButton()"><p class="actionText">CANCEL</p></div>');
+        }
+        function SelectAction(ind) {
+            resourceCall("actionSelected", itemId, actions[ind]);
+        }
+        function CancelButton()
+        {
+            $('#main-con').empty();
+            resourceCall("closeActionsMenu");
+        }
+    </script>
+</head>
+<body style="background-color: transparent;">
+    <div class="container">
+        <div id="main-con" class="inv-box" style="width:65vw;">
+                            
+        </div>
+    </div>
+</body>
+</html>

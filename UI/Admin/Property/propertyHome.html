@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="/res/jquery-3.1.1.min.js"></script>
+    <link href="/res/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/res/style.css" rel="stylesheet" />
+
+    <script type="text/javascript">
+        function updateTitle(name) {
+            document.getElementById("title01").innerHTML = "You are editing " + name;
+        }
+
+        function buttonResponse(id) {
+            document.getElementById(id).style = "display: fixed;";
+            document.getElementById("backContainer") = "display: fixed;";
+        }
+
+        function backButton() {
+
+        }
+    </script>
+</head>
+<body style="background-color: transparent;">
+    <div class="container" style="background-color: darkgrey">
+        <div align="center">
+            <hr />
+            <h3 id="title01">You are editing ....</h3>
+            <hr />
+
+            <div class="container" id="optionsContainer">
+                <table>
+                    <tr>
+                        <td>
+                            <div id="nameButton" class="col-md-4"><div class="btn btn-primary btn-block btn-flat" onclick="buttonResponse('nameEditContainer')">Name</div></div>
+                        </td>
+                        <td>
+                            <div id="typeButton" class="col-md-4"><div class="btn btn-primary btn-block btn-flat" onclick="buttonResponse('typeEditContainer')">Type</div></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="ownerButton" class="col-md-4"><div class="btn btn-primary btn-block btn-flat" onclick="buttonResponse('ownerEditContainer')">Owner</div></div>
+                        </td>
+                        <td>
+                            <div id="enterButton" class="col-md-4"><div class="btn btn-primary btn-block btn-flat" onclick="buttonResponse('enterEditContainer')">Enter Position</div></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="dimensionButton" class="col-md-4"><div class="btn btn-primary btn-block btn-flat" onclick="buttonResponse('dimensionEditContainer')">Dimension</div></div>
+                        </td>
+                        <td>
+                            <div id="interiorButton" class="col-md-4"><div class="btn btn-primary btn-block btn-flat" onclick="buttonResponse('interiorEditContainer')">interior</div></div>
+                        </td>
+                    </tr>
+                </table>
+                
+            </div>
+            <div class="container" id="backContainer" style="display:none;">
+                <div id="enterButton" class="col-md-4"><div class="btn btn-primary btn-block btn-flat" onclick="backButton()">Back</div></div>
+            </div>
+            <div class="container" id="nameEditContainer" style="display:none;"></div>
+            <div class="container" id="typeEditContainer" style="display:none;"></div>
+            <div class="container" id="ownerEditContainer" style="display:none;"></div>
+            <div class="container" id="enterEditContainer" style="display:none;"></div>
+            <div class="container" id="dimensionEditContainer" style="display:none;"></div>
+            <div class="container" id="interiorEditContainer" style="display:none;"></div>
+            <hr />
+            </div>
+    </div>
+</body>
+</html>

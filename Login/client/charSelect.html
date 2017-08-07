@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="/res/jquery-3.1.1.min.js"></script>
+    <link href="/res/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/res/style.css" rel="stylesheet" />
+
+    <style>
+        .playerInfo {
+            -webkit-box-shadow: inset 0px 0px 7px 3px rgba(0,0,0,0.55);
+            -moz-box-shadow: inset 0px 0px 7px 3px rgba(0,0,0,0.55);
+            box-shadow: inset 0px 0px 7px 3px rgba(0,0,0,0.55);
+            background-image: url('/res/test.png');
+            text-shadow: -1px -1px 0 #aaaaaa, 1px -1px 0 #aaaaaa, -1px 1px 0 #aaaaaa, 1px 1px 0 #aaaaaa;
+            color: #0c0c0c;
+            height: 120px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            bottom: 0;
+            width: inherit;
+            position: absolute;
+            padding-top: 10px;
+        }
+        #playerText {
+            /*text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135;*/
+            font-size: 25px;
+        }
+
+        #factionText {
+            font-size: 15px;
+            text-shadow: 1px 1px 0 #aaaaaa;
+            font-weight:bolder;
+
+        }
+    </style>
+
+    <script type="text/javascript">
+        function PopulateCharacters(characters, factions, count)
+        {
+            var charArray = characters.split(",");
+            var factionArray = factions.split(",");
+
+            for (i = 0; i < count; i++) {
+                $('#charList').append('<div id="char' + (i + 1) + '" class="col-xs-4 center"></div>');
+                $('#char' + (i + 1)).hide();
+                
+                $("#char" + (i + 1)).append("<div class='char-col hvr-float' onclick='SelectCharacter(" + i + ");'><img id='charImg" + 
+                    (i + 1) + "' src='' height='250px'/><div class='playerInfo vertical-center-row'><div id='playerText'> </div><div id='factionText'></div</div></div> ");
+
+                $("#char" + (i + 1)).find("#playerText").append(charArray[i].replace("_", " "));
+                $("#char" + (i + 1)).find("#factionText").append(factionArray[i]);
+            }
+            if (count != 5)
+            {
+                $('#charList').append('<div id="char' + (count + 1) + '" class="col-xs-4 center"></div>');
+                $('#char' + (count + 1)).hide();
+                $("#char" + (count + 1))
+                    .append("<div class='char-col hvr-float' onclick='CreateNewChar()'><div><img src='/res/createNewChar.png' height='width: 300px'/></div></div>");
+            }
+        }
+
+        function PopulateCharacterImages(charImgs, count)
+        {
+            var imgs = charImgs.split(".");
+
+            for (var i = 0; i < count; i++) {
+                if ($('#char' + (i+1)).has("div").has("#charImg" + (i+1)).length > 0)
+                    $('#charImg' + (i + 1)).attr("src", imgs[i]);
+            }
+
+            $('#char1').fadeIn("slow", function () {
+                if ($('#char2').length)
+                    $('#char2').fadeIn("slow", function () {
+                        if ($('#char3').length)
+                            $('#char3').fadeIn("slow", function () {
+                                if ($('#char4').length)
+                                    $('#char4').fadeIn("slow", function () {
+                                        if ($('#char5').length)
+                                            $('#char5').fadeIn("slow", function () {
+
+                                            });
+                                    });
+                            });
+                    });
+            });            
+        }
+        function SelectCharacter(id)
+        {
+            resourceCall("onCharacterSelected", id);
+        }
+        function CreateNewChar()
+        {
+            resourceCall("createNewChar");
+        }
+
+    </script>
+</head>
+<body style="background-color: transparent;">
+    <div class="container">
+        <div class="vertical-center-row" style="height:720px; width:1200px;">
+            <div style="text-align:center">
+                <img id="logo" width="250" />
+            </div>
+            <div class="charselect-box" style="padding: 20px;">
+                <div class="login-box-body">
+                    <div id="charList" class="row">
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

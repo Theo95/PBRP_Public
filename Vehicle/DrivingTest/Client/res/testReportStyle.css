@@ -1,0 +1,81 @@
+@font-face {
+    font-family: acrossTheRoad;
+    src: url("acrossTheRoad.ttf");
+    font-weight: bold;
+}
+
+body {
+	padding: 30px;
+	font-family: "Courier New", Courier, monospace;
+	color: black;
+	width: 70%;
+	height: 80%;
+	margin: 0 auto;
+	background-color: transparent;
+}
+
+.container {
+	background-color: white;
+}
+#closeButton {
+	top:10px;
+	right:10px;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+#dmvLogo {
+	width: 150px;
+	height: 150px;
+	margin-left: 10px;
+}
+
+#dmvLogoDiv {
+	display: inline-block;
+}
+
+#dmvTextDiv {
+	font-weight: bold;
+	vertical-align: middle;
+	font-size: 25px;
+	margin: auto;
+    width: 50%;
+	padding: 10px;
+	display: inline-block;
+}
+
+#subjectLine {
+	padding-bottom: 10px;
+	font-style: italic;
+}
+
+#footer {
+
+}
+
+#sigDiv {
+	float: left;
+	width: 30%;
+	height: 150px;
+	padding: 10px;
+}
+
+p#sig {
+	font-family: acrossTheRoad;
+	color: black;
+	border-bottom: 1px dotted #000;
+	font-size: 45px;
+}
+
+#licDiv {
+	float: right;
+	width: 70%;
+	height: 150px;
+	padding: 10px;
+	margin: auto;
+}
+
+#licImg {
+	width:400;
+	height:220;
+}

@@ -1,0 +1,63 @@
+﻿
+<div id="phone-ui">
+    <table style="min-height:100%; width: 100%;">
+        <tbody id="recentcall-list" style="font-family:Arial, Helvetica, sans-serif">
+            <tr class="phonecontacts-header">
+                <td class="text-left" style="width:10%; padding-left:0.4vw;"><span class="glyphicon" id="showcontact-favourite" onclick="MakeFavourite()"></span><i class="hidden" id="contact-id"></i></td>
+                <td class="text-center" style="font-weight:bold; font-size: 0.65vw;" id="showcontact-name"></td>
+                <td class="text-right" style="width:10%; padding-right:0.4vw;"><span onclick="EditContact()" class="glyphicon glyphicon-pencil"></span></td>
+            </tr>
+            <tr style="height:1.6vw;"></tr>
+            <tr style="height: 2.3vw; line-height:2.3vw; text-align:center">
+                <td style="width:4%;"></td>
+                <td><span style="font-weight:bolder; font-size:1.2vw;" id="showcontact-number"></span></td>
+                <td style="width:4%;"></td>
+            </tr>
+            <tr style="height:2vw; line-height:2vw;">
+                <td style="width:4%;"></td>
+                <td class="text-center">
+                    <span onclick="CallContact()" class="glyphicon glyphicon-earphone"><div style="font-family:Arial, Helvetica, sans-serif; font-size:0.4vw;">Call</div></span>
+                    <span style="padding-left:1vw;" class="glyphicon glyphicon-comment"><div style="font-family:Arial, Helvetica, sans-serif; font-size:0.4vw;">Message</div></span>
+                </td>
+                <td style="width:4%"></td>
+            </tr>
+
+            
+            <tr style="height:0.6vw; font-size:0.5vw;"><td style="width:2%"></td><td class="text-left">ADDRESS</td><td style="width:2%;"></td></tr>
+            <tr>
+                <td style="width:4%;"></td>
+                <td>
+                    <div class="form-group text-left" style="font-weight:normal; font-size:0.7vw;">
+                        <div id="showcontact-address-1"></div>
+                        <div id="showcontact-address-2"></div>
+                        <div id="showcontact-address-3"></div>
+                    </div>
+                </td>
+                <td style="width:4%;"></td>
+            </tr>
+            <tr style="height:0.6vw; font-size:0.5vw;"><td style="width:2%"></td><td class="text-left">NOTES</td><td style="width:2%;"></td></tr>
+            <tr>
+                <td style="width:4%;"></td>
+                <td><div id="showcontact-notes">Notes</div></td>
+                <td style="width:4%;"></td>
+            </tr>
+            <tr style="height:1.6vw;"></tr>
+            <tr class="text-center">
+                <td style="width:3%"></td>
+                <td><button class="btn btn-default" style="width:95%; color:#f00" onclick="DeleteContact()">Delete Contact</button></td>
+                <td style="width:3%"></td>
+            </tr>
+            <tr class="text-center">
+                <td style="width:3%"></td>
+                <td><button id="showcontact-block" class="btn btn-default" style="width:95%; color:#f00" onclick="BlockContact()">Block Contact</button></td>
+                <td style="width:3%"></td>
+            </tr>
+            <tr class="text-center">
+                <td style="width:3%"></td>
+                <td><button id="showcontact-changestorage" class="btn btn-default" style="width:95%;" onclick="ChangeContactStorage()">Save To SIM</button></td>
+                <td style="width:3%"></td>
+            </tr>
+            <tr style="height:2.8vw;"></tr>
+        </tbody>
+    </table>
+</div>

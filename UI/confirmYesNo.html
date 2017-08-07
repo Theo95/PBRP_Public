@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="/res/jquery-3.1.1.min.js"></script>
+    <link href="/res/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/res/style.css" rel="stylesheet" />
+
+   
+    <script type="text/javascript">
+        var returnEv = "";
+        function populateData(returnEvent, title, message, customYes = "", customNo = "")
+        {
+            returnEv = returnEvent;
+
+            $('h1').append(title);
+            $('#message').append(message);
+
+            if (customYes != "")
+            {
+                $('#yesBut').text(customYes);
+            }
+            if (customNo != "")
+            {
+                $('#noBut').text(customNo);
+            }
+        }
+
+        function yesResponse()
+        {
+            resourceCall("onResponseReceived", returnEv, 1);
+        }
+
+        function noResponse() {
+            resourceCall("onResponseReceived", returnEv, 0);
+        }
+    </script>
+</head>
+<body style="background-color: transparent;">
+    <div class="container">
+        <div class="vertical-center-row" style="height:600px; width:500px;">
+            <div>
+                <div id="main-con" class="conf-box" style="padding: 20px;">
+                    <h1 id="header" class="conf-header"></h1>
+                    <div class="conf-body">
+                        <hr/>
+                        <div>
+                            <p id="message"></p>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div id="yesButton" class="col-md-4"><div id="yesBut" class="btn btn-primary btn-block btn-flat" onclick="yesResponse()">Yes</div></div>
+                            <div id="noButton"class="col-md-4"><div id="noBut" class="btn btn-primary btn-block btn-flat" onclick="noResponse()">No</div></div>
+                            <div class="col-md-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

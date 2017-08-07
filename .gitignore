@@ -1,0 +1,144 @@
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# =========================
+# Operating System Files
+# =========================
+
+# OSX
+# =========================
+
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+*.config
+*.suo
+*.sln
+PBRP.csproj
+obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+*.csproj
+*.txt
+*.txt
+obj/Debug/PBRP.csproj.FileListAbsolute.txt
+*.csproj
+PBRP.csproj
+*.pdb
+App.config
+*.config
+PBRP.csproj
+*.cache
+bin/Debug/GTANetworkServer.exe
+*.config
+obj/Debug/PBRP.csproj.FileListAbsolute.txt
+obj/Debug/PBRP.csproj.FileListAbsolute.txt
+obj/Debug/PBRP.csproj.FileListAbsolute.txt
+*.csproj
+App.config
+types-gtanetwork/Xilium.CefGlue.dll.d.js
+types-gtanetwork/System.d.js
+types-gtanetwork/ScriptHookVDotNet.dll.d.js
+types-gtanetwork/System.Drawing.dll.d.js
+types-gtanetwork/NativeUI.dll.d.js
+types-gtanetwork/index.d.js
+types-gtanetwork/GTANetworkShared.dll.d.js
+types-gtanetwork/GTANetwork.dll.d.js
+types-gtanetwork/Enums.js
+types-gtanetwork/Declarations.d.js
+packages.config
+obj/Debug/build.force
+packages.config
+PBRP.csproj
+*.csproj
+PBRP.csproj
+*.mp4
+*.ppm
+out.wmv
+*.ts
+*.ts
+*.csproj
+packages.config
+*.ts
+*.log
+*.zip
+bin/Debug/Newtonsoft.Json.dll
+bin/Debug/Lidgren.Network.dll
+bin/Debug/GrandTheftMultiplayer.Shared.dll
+bin/Debug/EntityFramework.SqlServer.dll
+bin/Debug/EntityFramework.dll
+bin/Debug/CryptSharp.dll
+obj/Debug/PBRP.dll
+bin/Debug/NLog.dll
+/PBRP.dll
+bin/Debug/CryptSharp.xml
+bin/Debug/NLog.xml
+obj/Debug/PBRP.csproj.FileListAbsolute.txt
+packages.config
+PBRP.csproj
+/.idea
+/bin/Debug/EntityFramework.SqlServer.xml
+/bin/Debug/EntityFramework.xml
+/bin/Debug/protobuf-net.dll
+/packages
+/PBRP.iml
+/PBRP.csproj.user
+/bin/Debug/Microsoft.Owin.dll
+/bin/Debug/Microsoft.Owin.Hosting.dll
+/bin/Debug/Mono.Posix.dll
+/bin/Debug/Nancy.Owin.dll
+/bin/Debug/Nancy.dll
+/bin/Debug/Owin.dll
+*.exe
+obj/Debug/PBRP.csproj.FileListAbsolute.txt
+/packages/Newtonsoft.Json.10.0.2/lib/netstandard1.3
+/packages/Newtonsoft.Json.10.0.2/lib/portable-net40+sl5+win8+wpa81+wp8
+/packages/Newtonsoft.Json.10.0.2/lib/portable-net45+win8+wpa81+wp8
+/.idea
+/packages
+/packages/grandtheftmultiplayer.typescript.0.1.12
+/packages/Newtonsoft.Json.10.0.2
+/bin/Debug/EntityFramework.SqlServer.xml
+/bin/Debug/EntityFramework.xml
+/bin/Debug/protobuf-net.dll
+*.user
+*.iml
+/bin/Debug/Microsoft.Owin.dll
+/bin/Debug/Microsoft.Owin.Hosting.dll
+/bin/Debug/Mono.Posix.dll
+/bin/Debug/Nancy.dll
+/bin/Debug/Nancy.Owin.dll
+/bin/Debug/Owin.dll

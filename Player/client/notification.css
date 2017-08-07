@@ -1,0 +1,16 @@
+﻿.ui-dialog .ui-dialog-buttonpane {
+    text-align: center;
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+    float: none;
+}
+
+.ui-dialog .ui-dialog-title {
+    text-align: center;
+    width: 100%;
+}
+
+.ajs-message.ajs-admin {
+    background-color: #4baef4;
+}

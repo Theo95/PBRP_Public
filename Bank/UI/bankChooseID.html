@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="/res/jquery-3.1.1.min.js"></script>
+    <link href="/res/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/res/style.css" rel="stylesheet" />
+
+    <script type="text/javascript">
+        function populateInventoryItems(itemIds, itemNames, itemImages, itemQuantities)
+        {
+            var ids = itemIds.split(",");
+            var items = itemNames.split(",");
+            var images = itemImages.split(".");
+            var quantities = itemQuantities.split(",");
+            var count = 0;
+
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].length > 3) {
+                    $('#main-con').append("<div id='item" + i + "' class='inv-item hvr-float' onclick='SelectBankCard(" + ids[i] + ")'><img src='" + images[i] +
+                        "' height='100px' /><br />" + items[i] + "</div>");
+                    count++;
+                }
+            }
+
+            $('#main-con').append("<div id='item" + i + "' class='inv-item hvr-float' onclick='NoID()'><img src='' height='100px' /><br /> No ID </div>");
+            $('.LoadingText').remove();
+        }
+        function NoID()
+        {
+            resourceCall("noIDSelected");
+        }
+        function SelectIDCard(id)
+        {
+            resourceCall("IDCardSelected", id);
+        }
+
+        function closeBankMenu()
+        {
+            resourceCall("closeBank");
+        }
+    </script>
+</head>
+    <body style="background-color: transparent;">
+        <div class="container">
+            
+            <div class="vertical-center-row" style="text-align:left; height:570px; width:900px;">
+                <div class="inv-box" style="width:900px; text-align:center">
+                    <div class="inv-close" onclick="closeBankMenu()">X</div>
+                </div>
+                <div id="main-con" class="inv-box" style="height:550px; padding:20px; width:900px;">
+                    <div class="LoadingText">Loading...</div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

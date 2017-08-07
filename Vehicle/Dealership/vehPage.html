@@ -1,0 +1,109 @@
+﻿<div id="banner-dealer" class="dealerpage-banner"></div>
+<img src="" class="dealerpage-image" />
+<div class="dealerpage-details">
+    <div class="row" style="padding:10px;">
+        <div class="col-md-6" style="height:100%;">
+            <table>
+                <tr>
+                    <th class="text-center">Price</th>
+                    <td><div id="dealerpage-price"></div></td>
+                </tr>
+                <tr>
+                    <th class="text-center">No. of seats</th>
+                    <td><div id="dealerpage-seats"></div></td>
+                </tr>
+                <tr>
+                    <th class="text-center">Top speed</th>
+                    <td><div id="dealerpage-topspeed"></div></td>
+                </tr>
+
+                <tr>
+                    <th></th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <table>
+                <tbody>
+                    <tr>
+                        <th style="width:10%"><div style="transform: rotate(-90deg);">RATING</div></th>
+                        <td style="width: 90%">
+                            <div class="progress-label">SPEED</div>
+                            <div class="progress">
+                                <div id="dealerpage-maxspeed" class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width:20%"></div>
+                            </div>
+                            <div class="progress-label">BRAKING</div>
+                            <div class="progress">
+                                <div id="dealerpage-maxbraking" class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width:70%"></div>
+                            </div>
+
+                            <div class="progress-label">ACCELERATION</div>
+                            <div class="progress">
+                                <div id="dealerpage-maxaccel" class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width:45%"></div>
+                            </div>
+                            <div class="progress-label">TRACTION</div>
+                            <div class="progress">
+                                <div id="dealerpage-maxtraction" class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width:52%"></div>
+                            </div>
+                            <div class="progress-label">OVERALL</div>
+                            <div class="progress">
+                                <div id="dealerpage-maxspeed" class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width:20%"></div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-4" style="margin-bottom:15px;text-align:center">
+        <div id="dealerpreview-button" onclick="PreviewVehicle(this)" class="btn-lg btn-default btn-block btn-flat" style="margin-bottom:15px;text-align:center">
+            <span class="glyphicon glyphicon-eye-open"></span>  Preview
+        </div>
+    </div>
+    <div class="col-md-4" style="margin-bottom:15px;text-align:center">
+        <div class="btn-lg btn-default btn-block btn-flat" onclick="Cancel()"><div style="color:#f00"><span class="glyphicon glyphicon-remove"></span>  Cancel</div></div>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+
+<!--$('.flipbook').append('<div id="page' + i + '">
+    <div id="banner-dealer" class="dealerpage-banner"></div>' +
+    '< img src= "" class="dealerpage-image" />' +
+    '<div class="dealerpage-details">
+        ' +
+        '<div id="dealerpage-maxspeed"></div><br />'+
+        '<div id="dealerpage-maxbraking"></div><br />'+
+        '<div id="dealerpage-maxaccel"></div><br />'+
+        '<div id="dealerpage-seats"></div><br />'+
+        '
+    </div>'+
+    '<div class="row">
+        '+
+        '<div class="col-md-4">
+            '+
+            '<div class="btn btn-primary btn-block btn-flat">Preview</div>'+
+            '
+        </div>'+
+        '<div class="col-md-4">
+            '+
+            '<div class="btn btn-primary btn-block btn-flat">Test Drive</div>'+
+            '
+        </div>'+
+        '<div class="col-md-4">
+            '+
+            '<div class="btn-danger btn btn-block btn-flat">Exit</div>'+
+            '
+        </div>'+
+        '
+    </div>
+</div>');-->

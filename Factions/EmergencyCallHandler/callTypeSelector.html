@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../../res/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="../../../res/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../../res/css/bootstrap.min.css">
+    <link rel="stylesheet" href="callTypeSelector.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <h1>Call Types</h1>
+            <div class="callTypes"></div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    var types
+    function addCallTypes(json) {
+            types = jQuery.parseJSON(json);
+            types.map((type) => {
+                $('.callTypes').append(`<p><button class='btn btn-primary type' onclick='selectType("${type}")'>${type}</button></p>`)
+            })
+    }
+
+    function selectType(type) {
+        resourceCall("callTypeSelected", types.indexOf(type) +1)
+    }
+</script>

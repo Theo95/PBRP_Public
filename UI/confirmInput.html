@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="/res/jquery-3.1.1.min.js"></script>
+    <link href="/res/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/res/style.css" rel="stylesheet" />
+
+   
+    <script type="text/javascript">
+        var returnEv = "";
+        var t = "";
+        var m = "";
+        function populateData(returnEvent, title, message, custYes, custNo) {
+            returnEv = returnEvent;
+            t = title;
+            m = message;
+
+            $('h1').append(title);
+            $('#message').append(message);
+
+            if (custYes != "") {
+                $('#yesBut').text(custYes);
+            }
+            if (custNo != "") {
+                $('#noBut').text(custNo);
+            }
+        }
+
+        function cancelResponse() {
+            resourceCall("onResponseReceived", returnEv, 0);
+        }
+
+        jQuery(function ($) {
+            $("form").on('submit', function (e) {
+                e.preventDefault();
+                var input = $("#returnInput").val();
+                if (input.length > 0) {
+                    resourceCall("onResponseReceived", returnEv, 1, input, t, m);
+                }
+                else $('#returnInput').css("border-color", "#f00");
+            });
+        });
+    </script>
+</head>
+<body style="background-color: transparent;">
+    <div class="container">
+        <div class="vertical-center-row" style="height:600px; width:500px;">
+            <div id="main-con" class="conf-box" style="padding: 20px;">
+                <h1 id="header" class="conf-header"></h1>
+                <form method="post" action="">
+                    <div class="conf-body">
+                        <hr />
+                        <div>
+                            <p id="message"></p>
+                        </div>
+                        <input type="text" class="form-control" placeholder="" id="returnInput" spellcheck="false" autofocus>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div id="yesButton" class="col-md-4"><button id="yesBut" type="submit" class="btn btn-primary btn-block btn-flat">Ok</button></div>
+                            <div id="noButton" class="col-md-4"><div id="noBut" class="btn btn-primary btn-block btn-flat" onclick="cancelResponse()">Cancel</div></div>
+                            <div class="col-md-2"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

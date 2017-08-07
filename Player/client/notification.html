@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="../../res/jquery-3.1.1.min.js"></script>
+    <link href="../../res/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../res/style.css" rel="stylesheet" />
+
+    <script src="../../res/jquery-ui.min.js"></script>
+    <link href="../../res/jquery-ui.min.css" rel="stylesheet" />
+    <link href="../../res/jquery-ui.structure.min.css" rel="stylesheet" />
+    <link href="../../res/jquery-ui.theme.min.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="../../res/alertify.min.js"></script>
+    <link href="../../res/alertify.min.css" rel="stylesheet" />
+    <link href="../../res/semantic.min.css" rel="stylesheet" />
+
+    <link href="notification.css" rel="stylesheet"/>
+
+
+    <script>
+        $(function () {
+            alertify.set('notifier', 'position', 'top-left');
+
+            $("#dialog-input").dialog({
+                autoOpen: false,
+                width: 400,
+                modal: true,
+                resizable: false
+            });            
+        });
+
+        var retEvent = "";
+        var tit = "";
+        var mess = "";
+
+        function confirmationUIMessage(tit, message)
+        {
+            $('#dialog-message-body').html(message);
+            $('#dialog-message').dialog({
+                autoOpen: false,
+                width: 400,
+                modal: true,
+                resizable: false,
+                title: tit,
+                buttons: {
+                    OK: function () {
+                        resourceCall("closeConfirmBox");
+                        $(this).dialog("close");
+                    }
+                }
+            }).dialog("open");
+        }
+
+        function confirmationUIYesNo(returnEvent, title, message, custYes, custNo)
+        {
+            var yes = custYes == "" ? "OK" : custYes;
+            var no = custNo == "" ? "Cancel" : custNo;
+
+            retEvent = returnEvent;
+            tit = title;
+            mess = message;
+
+            $('#dialog-yesno-body').html(message);
+            $('#dialog-yesno').dialog({
+                autoOpen: false,
+                width: 400,
+                modal: true,
+                resizable: false,
+                title: tit
+            }).dialog("option", "buttons", 
+                [{
+                    text: yes,
+                    click: function () {
+                        resourceCall("onResponseReceived", retEvent, 1);
+                        $(this).dialog("close");
+                    }
+                },
+                {
+                    text: no,
+                    click: function () {
+                        resourceCall("onResponseReceived", retEvent, 0);
+                        $(this).dialog("close");
+                    }
+                }]).dialog("open");
+        }
+
+        function confirmationUIInput(returnEvent, title, message, custYes, custNo)
+        {
+            var yes = custYes == "" ? "OK" : custYes;
+            var no = custNo == "" ? "Cancel" : custNo;
+
+            retEvent = returnEvent;
+            tit = title;
+            mess = message;
+
+            $('#dialog-input').dialog("option", "title", tit);
+            $("#dialog-input").dialog("option", "buttons",
+                [{
+                    text: yes,
+                    click: function () {
+                        resourceCall("onResponseReceived", retEvent, 1, $('#dialog-input-input').val(), tit, mess);
+                        $(this).dialog("close");
+                    }
+                },
+                {
+                    text: no,
+                    click: function () {
+                        resourceCall("onResponseReceived", retEvent, 0);
+                        $(this).dialog("close");
+                    }
+                }]);
+
+            $('#dialog-input-form').on("submit", function (event) {
+                event.preventDefault();
+                resourceCall("onResponseReceived", retEvent, 1, $('#dialog-input-input').val(), tit, mess);
+                $('#dialog-input').dialog("close");
+                $(this).reset();
+            });
+
+            $('#dialog-input-body').html(mess);
+            $('#dialog-input').dialog("open");
+
+        }
+        function errorNotification(message, time)
+        {
+            alertify.error(message, time);
+        }
+        function successNotification(message, time)
+        {
+            alertify.success(message, time);
+        }
+        function infoNotification(message, time)
+        {
+            alertify.message(message, time);
+        }
+        function warningNotification(message, time)
+        {
+            alertify.warning(message, time);
+        }
+
+        function adminNotification(message, time)
+        {
+            alertify.notify(message, "admin", time);
+        }
+    </script>
+</head>
+<body style="background-color: transparent; z-index:60">
+    <div class="container">
+        <div id="dialog-input" title="" hidden>
+            <p id="dialog-input-body" class="text-center"></p>
+            <form id="dialog-input-form" class="text-center">
+                <fieldset>
+                    <input type="text" id="dialog-input-input" value="" style="width:80%" class="text ui-widget-content ui-corner-all" />
+                    <!-- Allow form submission with keyboard without duplicating the dialog button -->
+                    <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+                </fieldset>
+            </form>
+        </div>
+        <div id="dialog-message" title="" hidden>
+            <p id="dialog-message-body" class="text-center"></p>
+        </div>
+        <div id="dialog-yesno" title="" hidden>
+            <p id="dialog-yesno-body" class="text-center"></p>
+        </div>
+        
+    </div>
+</body>
+</html>

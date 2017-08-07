@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=1050, user-scalable=yes" />
+    <script type="text/javascript" src="../../res/jquery.min.1.7.js"></script>
+    <script type="text/javascript" src="../../res/turn.js"></script>
+    <script type="text/javascript">
+        var pageCount = 1;
+        var pageNum = 1;
+        var previewStarted = false;
+        var cancelled = false;
+        function InitDealerBook(count, frontPage) {
+            for (var i = 1; i < count; i++) {
+                $('.flipbook').append("<div id='page" + i + "' class='page'></div>");
+                $("#page" + i).load("vehPage.html");
+            }
+            $("#front-page").find('img').attr("src", frontPage);
+            pageCount = count;
+        }
+
+        function SetPageTitle(dealerData) {
+            var vehInfo = JSON.parse(dealerData);
+
+            var speed = ((vehInfo.MaxSpeed / 55) * 100);
+            var braking = (vehInfo.MaxBraking * 10);
+            var accel = ((vehInfo.MaxAcceleration / 3) * 10);
+            var traction = (vehInfo.MaxTraction * 10);
+
+            $("#page" + pageNum).find('#dealerpage-price').text(vehInfo.Price.toString());
+            $("#page" + pageNum).find('#banner-dealer').text(vehInfo.Name);
+            $("#page" + pageNum).find('#dealerpage-maxspeed').css("width", speed + "%");
+            $("#page" + pageNum).find('#dealerpage-maxbraking').css("width", braking + "%");
+            $("#page" + pageNum).find('#dealerpage-maxaccel').css("width", accel + "%");
+            $("#page" + pageNum).find('#dealerpage-maxtraction').css("width", traction + "%");
+            $("#page" + pageNum).find('#dealerpage-seats').text(vehInfo.MaxOccupants + "-seater");
+            $("#page" + pageNum).find('#dealerpage-topspeed').text(speed.toFixed(0) + "mph");
+
+            $("#page" + pageNum).find('#dealerpreview-button').attr("id", "dealerpreview-button-" + vehInfo.Id);
+
+            $("#page" + pageNum).find('img').attr("src", vehInfo.Image);
+
+            pageNum++;
+            if(pageNum == pageCount) loadApp();
+        }
+
+        function PreviewVehicle(id) {
+            console.log($(id).attr("id").replace("dealerpreview-button-", ""))
+            if (!previewStarted)
+                resourceCall("previewVehicleDealer", $(id).attr("id").replace("dealerpreview-button-", ""));
+
+            previewStarted = true;
+        }
+
+        function Cancel() {
+            if (!cancelled)
+                resourceCall("exitPreview");
+            cancelled = true;
+        }
+
+        function loadApp() {
+
+            var flipbook = $('.flipbook');
+
+            if (flipbook.width() === 0 || flipbook.height() === 0) {
+                setTimeout(loadApp, 20);
+                return;
+            }
+
+            $('.flipbook').turn({
+                elevation: 50,
+                gradients: true,
+                autoCenter: true
+            });
+        }
+    </script>
+    <link href="../../res/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../res/vehdealer-book.css" rel="stylesheet" />
+
+
+</head>
+<body style="background-color: transparent">
+    <div class="flipbook-viewport">
+        <div class="container">
+            <div class="flipbook">
+                <div id="front-page" class="hard page"><img class="dealerpage-image" src="" /></div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="/res/jquery-3.1.1.min.js"></script>
+    <link href="/res/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/res/style.css" rel="stylesheet" />
+
+   
+    <script type="text/javascript">
+        var returnEv = "";
+        function populateData(returnEvent, title, message)
+        {
+            returnEv = returnEvent;
+
+            $('h1').append(title);
+            $('#message').append(message);
+        }
+    </script>
+</head>
+<body style="background-color: transparent;">
+    <div class="container">
+        <div class="vertical-center-row" style="height:600px; width:500px;">
+            <div>
+                <div id="main-con" class="conf-box" style="padding: 20px;">
+                    <h1 id="header" class="conf-header"></h1>
+                    <div class="conf-body">
+                        <hr/>
+                        <div>
+                            <p id="message"></p>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div id="okButton" class="col-md-8"><div class="btn btn-primary btn-block btn-flat" onclick="resourceCall('closeConfirm')">OK</div></div>
+                            <div class="col-md-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,197 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="../../res/jquery-3.1.1.min.js"></script>
+    <link href="../../res/jquery-ui.min.css" rel="stylesheet" />
+    <link href="../../res/jquery-ui.structure.min.css" rel="stylesheet" />
+    <link href="../../res/jquery-ui.theme.min.css" rel="stylesheet" />
+    <link href="../../res/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../res/jquery-ui.min.js"></script>
+    <link href="../../res/style.css" rel="stylesheet" />
+    <script>
+        var day = 12;
+        var month = 12;
+        var year = 1999;
+        var gender = 0;
+
+        $(function () {
+            $('#createChar-name').bind('keypress', verifyInput);
+           
+        });
+        
+
+        function NextGender() {
+            if ($('#createChar-gender').text().includes("FEMALE")) {
+                $('#createChar-gender').text("MALE");
+                gender = 0;
+            }
+            else {
+                $('#createChar-gender').text("FEMALE");
+                gender = 1;  
+            }
+            resourceCall('createCharChangeGender', gender);
+        }
+
+        function getAge(dateString) {
+            var birthday = +new Date(dateString);
+            return ~~((Date.now() - birthday) / (31557600000));
+        }
+
+        function dayUp() {
+            if (month == 9 || month == 4 || month == 6 || month == 11)
+            {
+                if (day >= 30) day = 1;
+                else day++;
+            }
+            else if(month == 2)
+            {
+                if (day >= 28) day = 1;
+                else day++;
+            }
+            else
+            {
+                if (day >= 31) day = 1;
+                else day++;
+            }
+            $('#createChar-dobDay').text(day + " ");
+            $('#createChar-age').text(getAge(month + "/" + day + "/" + year) + " years old");
+        }
+
+        function dayDown() {
+            if (month == 9 || month == 4 || month == 6 || month == 11) {
+                if (day <= 1) day = 30;
+                else day--;
+            }
+            else if (month == 2) {
+                if (day <= 1) day = 28;
+                else day--;
+            }
+            else {
+                if (day <= 1) day = 31;
+                else day--;
+            }
+            $('#createChar-dobDay').text(day + " ");
+            $('#createChar-age').text(getAge(month + "/" + day + "/" + year) + " years old");
+        }
+
+        function monthUp() {
+            if (month >= 12) month = 1;
+            else month++;
+
+            dayDown();
+            dayUp();
+
+            $('#createChar-dobMonth').text(month + " ");
+            $('#createChar-age').text(getAge(month + "/" + day + "/" + year) + " years old");
+        }
+
+        function monthDown() {
+            if (month <= 1) month = 12;
+            else month--;
+            dayDown();
+            dayUp();
+
+            $('#createChar-dobMonth').text(month + " ");
+            $('#createChar-age').text(getAge(month + "/" + day + "/" + year) + " years old");
+        }
+
+        function yearUp() {
+            if (getAge(day + "/" + month + "/" + year) <= 16) {
+                year = 1901;
+            }
+            else year++;
+
+            $('#createChar-dobYear').text(year + " ");
+            $('#createChar-age').text(getAge(month + "/" + day + "/" + year) + " years old");
+        }
+
+        function yearDown() {
+            if (year <= 1901) {
+                year = new Date().getFullYear() - 16;
+                if (getAge(month + "/" + day + "/" + year) < 16)
+                    year--;
+            }
+            else year--;
+
+            $('#createChar-dobYear').text(year + " ");
+            $('#createChar-age').text(getAge(month + "/" + day + "/" + year) + " years old");
+        }
+        function CreateCharProceed()
+        {
+            if ($('#createChar-name').css("border-left-color") == "rgb(0, 255, 0)") {
+                resourceCall("createCharProceed", $('#createChar-name').val(), gender, day, month, year);
+            }
+            else {
+                $('#createChar-name').addClass("hvr-wobble-horizontal");
+                setTimeout(function () {
+                    $('#createChar-name').removeClass("hvr-wobble-horizontal");
+                }, 500);
+            }
+        }
+
+        function createCharUsernameCheck() 
+        {
+            if ($('#createChar-name').val().length > 5) {
+                if ($('#createChar-name').val().includes(" ")) {
+                    if (/^[a-zA-Z0-9- ]*$/.test($('#createChar-name').val()))
+                        resourceCall('createCharUsernameCheck', $('#createChar-name').val().replace(" ", "_"));
+                    else $('#createChar-name').css('border-color', "#f00");
+
+                }
+            }
+            else $('#createChar-name').css('border-color', "#fff");
+
+        }
+
+        function createCharUsernameResult(result) {
+            if (result == 0)
+                $('#createChar-name').css('border-color', "#0f0");
+            else 
+                $('#createChar-name').css('border-color', "#f00");
+        }
+
+        function verifyInput(event) {
+            var value = String.fromCharCode(event.which);
+            var pattern = new RegExp(/[a-zåäö ]/i);
+            return pattern.test(value);
+        }
+
+    </script>
+</head>
+<body style="background-color: transparent;">
+    <div class="container" style="display:block;">
+        <div class="row" style="height:100%;">
+            <div class="col-md-8" style="height:100%">
+            </div>
+            <div class="col-md-4">
+                <div class="newChar-body-con">
+                    <div class="newChar-body">
+                        <br />
+      
+                        <br/>
+                        <input id="createChar-name" pattern="[A-Za-z]" oninput="createCharUsernameCheck()" class="form-control createChar-name" placeholder="Enter character name.." maxlength="24" />
+                        <label class="createChar-label">GENDER</label>
+                        <div class="createChar-gender"><span class="glyphicon chevron-big glyphicon-chevron-left" onclick="NextGender()"></span><span id="createChar-gender" class="createChar-tickerText">&nbsp;MALE&nbsp;</span><span class="glyphicon chevron-big glyphicon-chevron-right" onclick="NextGender()"></span></div>
+        
+                        <label class="createChar-label" style="line-height:1.1vw;">DATE OF BIRTH<br/><span id="createChar-age" style="font-size:0.95vw">17 years old</span></label>
+                        <div class="row" style="margin:0;">
+                            <div class="col-md-1" style="width:12.5%"></div>
+                            <div class="col-md-3 text-center"><span class="glyphicon chevron-big glyphicon-chevron-up" onclick="dayUp()"></span><div class="createChar-tickerText" id="createChar-dobDay">12&nbsp;</div><span onclick="dayDown()" class="glyphicon chevron-big glyphicon-chevron-down"></span></div>
+                            <div class="col-md-3 text-center"><span class="glyphicon chevron-big glyphicon-chevron-up" onclick="monthUp()"></span><div class="createChar-tickerText" font-weight:bold" id="createChar-dobMonth">12&nbsp;</div><span onclick="monthDown()" class="glyphicon chevron-big glyphicon-chevron-down"></span></div>
+                            <div class="col-md-3 text-center"><span class="glyphicon chevron-big glyphicon-chevron-up" onclick="yearUp()"></span><div class="createChar-tickerText"font-weight:bold" id="createChar-dobYear">1999</div><span onclick="yearDown()" class="glyphicon chevron-big glyphicon-chevron-down"></span></div>
+                            <div class="col-md-1" style="width:12.5%"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6"><span onclick="resourceCall('cancelCharacterCreate')" class="createChar-tickerText" style="line-height:2.2vw;font-size:0.9vw;">&nbsp;CANCEL</span></div>
+                            <div class="col-md-6"><span class="createChar-tickerText" onclick="CreateCharProceed()" style="line-height:2.2vw;font-size:0.9vw;">&nbsp;PROCEED <span class="glyphicon glyphicon-chevron-right" &nbsp;></span><span style="margin-left:-0.4vw" class="glyphicon glyphicon-chevron-right"></span></span></div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

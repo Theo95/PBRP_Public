@@ -1,0 +1,22 @@
+﻿<div id="phone-ui">
+    <div id="messages-list" style="width: 100%;">
+        <div class="phonecontacts-header">
+            <div class="col-md-1 text-left" style="line-height:1.6vw; width:10%"  onclick="resourceCall('loadMessagesApp')"><div class="ui-back-button"><span class="glyphicon glyphicon-triangle-left"></span> Back</div><i class="hidden" id="messageconvo-number"></i></div>
+            <div class="col-md-10 text-center" id="messageconvo-name" style="line-height:1.6vw; font-weight:bold; font-size: 0.65vw; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow:hidden; text-overflow:ellipsis"></div>
+            <div class="col-md-1 text-right" style="padding-right:0.4vw; line-height:1.6vw; width:10%;"><span onclick="" class="glyphicon glyphicon-delete"></span></div>
+        </div>
+        <div style="height:1.8vw"></div>
+        <div id="messageconvo-list" style="width:100%;">
+
+        </div>
+        <div style="height:1.6vw"></div>
+    </div>
+    <div class="row messageconvo-input">
+        <div class="input-group has-feedback" style="width:9vw; margin:0.3vw auto;">
+            <input onfocus="resourceCall('onMessageFocus', true)" onblur="resourceCall('onMessageFocus', false)" id="messageconvo-messagebox" placeholder="Enter message.." maxlength="128" style="width:9vw; padding-right:1vw;" />
+            <div class="input-group-btn">
+                <button class="btn" id="messageconvo-send" style="font-size:0.5vw; padding:2px; width:1vw; margin-left:-1vw; color:#000" onclick="sendNewMessage()"><span class="glyphicon glyphicon-arrow-up"></span></button>
+            </div>
+        </div>
+    </div>
+</div>

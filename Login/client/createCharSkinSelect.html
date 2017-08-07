@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="../../res/jquery-3.1.1.min.js"></script>
+    <link href="../../res/jquery-ui.min.css" rel="stylesheet" />
+    <link href="../../res/jquery-ui.structure.min.css" rel="stylesheet" />
+    <link href="../../res/jquery-ui.theme.min.css" rel="stylesheet" />
+    <link href="../../res/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../res/jquery-ui.min.js"></script>
+    <link href="../../res/style.css" rel="stylesheet" />
+    <script>
+        var day = 12;
+        var month = 12;
+        var year = 1999;
+
+        $(function () {
+            $("#slider").slider({
+                min: 0,
+                max: 359,
+                animate: "slow",
+                slide: function (event, ui) { resourceCall("createCharRotateModel", ui.value); }
+            });
+        });
+    </script>
+</head>
+<body style="background-color: transparent;">
+    <div class="container" style="display:block;">
+        <div class="row" style="height:100%;">
+            <div class="col-md-8" style="height:100%">
+            </div>
+            <div class="col-md-4">
+                <div class="newChar-body-con">
+                    <div class="newChar-body">
+                        <br/>
+                        <label class="createChar-label" style="font-size:1.59vw">SKIN SELECTION</label>
+                        <br/>
+
+                        <div class="text-center" style="margin:0 auto; width:17vw;">
+                            <div onclick="resourceCall('skinCategorySelect', 0)" class="selectSkin-category"></div> 
+                            <div onclick="resourceCall('skinCategorySelect', 1)" class="selectSkin-category"></div> 
+                            <div onclick="resourceCall('skinCategorySelect', 2)" class="selectSkin-category"></div> 
+                            <div onclick="resourceCall('skinCategorySelect', 3)" class="selectSkin-category"></div> 
+                            <div onclick="resourceCall('skinCategorySelect', 4)" class="selectSkin-category"></div> 
+                            <div onclick="resourceCall('skinCategorySelect', 5)" class="selectSkin-category"></div> 
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-md-6"><span class="createChar-tickerText" style="line-height:2.2vw;font-size:0.9vw;"><span class="glyphicon glyphicon-chevron-left" &nbsp;></span><span style="margin-left:-0.4vw;" class="glyphicon glyphicon-chevron-left"></span>&nbsp;BACK</span></div>
+                            <div class="col-md-6"></div>
+                        </div>
+                        <!--<span class="createChar-tickerText" style="line-height:2.2vw;font-size:0.9vw;">&nbsp;PROCEED <span class="glyphicon glyphicon-chevron-right" &nbsp;></span><span class="glyphicon glyphicon-chevron-right"></span></span>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>speed</title>
+    <style>
+        @font-face{
+            font-family: Highway;
+            src: url('res/highway.ttf');
+        }
+        #currMax{
+            border: solid 5px black;
+            width: 130px;
+            height: 150px;
+            border-radius: 5px;
+            text-align: center;
+            font-family: 'Highway';
+            line-height: 25px;
+            color: black;
+            background-color: white;
+        }
+    </style>
+</head>
+
+<script>
+    function updateMax(newMax){
+        document.getElementById("speedLimit").innerHTML = newMax;
+    }
+    function updateUpcoming(newUMax){
+        document.getElementById("upcomingMax").innerHTML="Upcoming Speed Limit: " + newUMax + "mph";
+    }
+</script>
+
+<body>
+<div id="currMax"><p style="font-size: 30px;">SPEED LIMIT</p>
+    <p id="speedLimit" style="font-size: 40px; line-height: 0; -webkit-transform:scale(2,1);">0</p></div>
+</body>
+</html>

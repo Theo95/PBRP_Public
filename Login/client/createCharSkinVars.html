@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="../../res/jquery-3.1.1.min.js"></script>
+    <link href="../../res/jquery-ui.min.css" rel="stylesheet" />
+    <link href="../../res/jquery-ui.structure.min.css" rel="stylesheet" />
+    <link href="../../res/jquery-ui.theme.min.css" rel="stylesheet" />
+    <link href="../../res/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../res/jquery-ui.min.js"></script>
+    <link href="../../res/style.css" rel="stylesheet" />
+    <script>
+        var componentId = 0;
+
+        var texMax = 0;
+        var drawMax = 0;
+        var textureId = 0;
+        var drawable = 0;
+        var componentNames = [" FACE ", " HEAD ", " HAIR ", " TORSO ", " LEGS ", " HANDS ", " FEET ", " EYES ", " ACCESSORIES ", " TASKS ", " TEXTURES ", " TORSO2 "]; 
+
+        $(document).ready(function() {
+            resourceCall('skinCustomAvailableOptions', componentId);
+        });
+
+        function NextSkin() {
+            resourceCall("skinSelectChange", +1);
+            componentId = 0;
+            $('#skinCustom-component').text(componentNames[componentId]);
+            resourceCall('skinCustomAvailableOptions', componentId);
+        }
+
+        function PreviousSkin() {
+            resourceCall("skinSelectChange", -1);
+            componentId = 0;
+            $('#skinCustom-component').text(componentNames[componentId]);
+            resourceCall('skinCustomAvailableOptions', componentId);
+        }
+
+        function NextComponentType() {
+            componentId++;
+            if (componentId > 11) componentId = 0;
+            
+            resourceCall('skinCustomAvailableOptions', componentId);
+        }
+        function PrevComponentType() {
+            componentId--;
+            if (componentId < 0) componentId = 11;
+
+            resourceCall('skinCustomAvailableOptions', componentId);
+        }
+
+        function TextureUp() {
+            textureId++;
+            if (textureId >= texMax) textureId = 0;
+
+            $('#skinCustom-texture').text(textureId);
+            resourceCall("skinCustomTextureChange", componentId, drawable, textureId);
+        }
+
+        function TextureDown() {
+            textureId--;
+            if (textureId < 0) textureId = texMax == 0 ? 0 : texMax - 1;
+
+            $('#skinCustom-texture').text(textureId);
+            resourceCall("skinCustomTextureChange", componentId, drawable, textureId);
+        }
+
+        function TypeUp() {
+            drawable++;
+            if (drawable >= drawMax) drawable = 0;
+
+            $('#skinCustom-type').text(drawable);
+            resourceCall("skinCustomTypeChange", componentId, drawable, textureId);
+        }
+
+        function TypeDown() {
+            drawable--;
+            if (drawable < 0) drawable = drawMax == 0 ? 0 : drawMax - 1;
+
+            $('#skinCustom-type').text(drawable);
+            resourceCall("skinCustomTypeChange", componentId, drawable, textureId);
+        }
+
+        function skinCustomUpdateOptions(draw, tex)
+        {
+            texMax = tex;
+            drawMax = draw;
+            $('#skinCustom-component').text(componentNames[componentId]);
+
+            $('#skinCustom-type').text("0");
+            $('#skinCustom-texture').text("0");
+
+            if (draw <= 1)
+            {
+                $('#skinCustom-component').css('opacity', '0.4');
+            }
+            else $('#skinCustom-component').css('opacity', '1.0');
+        }
+
+        function skinSelectClassSkin(cMax, currInd)
+        {
+            classMax = cMax;
+            skinInd = currInd;
+        }
+    </script>
+</head>
+<body style="background-color: transparent;">
+    <div class="container" style="display:block;">
+        <div class="row" style="height:100%;">
+            <div class="col-md-8" style="height:100%">
+
+            </div>
+            <div class="col-md-4">
+                <div class="newChar-body-con">
+                    <div class="newChar-body">
+                        <br/>
+                        <label class="createChar-label" style="font-size:1.49vw; line-height:1.5vw">SKIN SELECTION</label>
+                        <br/>
+                        <br />
+                        <div class="createChar-gender"><span onclick="PreviousSkin()"><span class="glyphicon chevron-big glyphicon-chevron-left"></span><span style="margin-left: -0.4vw" class="glyphicon chevron-big glyphicon-chevron-left"></span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                           <span onclick="NextSkin()"><span class="glyphicon chevron-big glyphicon-chevron-right"></span><span style="margin-left:-0.4vw;" class="glyphicon chevron-big glyphicon-chevron-right"></span></span></div>
+                        <br/>
+                        <label class="createChar-label" style="font-size:1.49vw; line-height:1.5vw">VARIATIONS</label>
+                        <div class="createChar-gender"><span class="glyphicon chevron-big glyphicon-chevron-left" onclick="PrevComponentType()"></span><span id="skinCustom-component" class="skinCust-tickerText">&nbsp;FACE&nbsp;</span><span class="glyphicon chevron-big glyphicon-chevron-right" onclick="NextComponentType()"></span></div>
+                        <label class="createChar-label" style="width:30%">TYPE</label><span>&nbsp;&nbsp;&nbsp;</span><label class="createChar-label" style="width:30%">TEXTURE</label>
+                        <div class="row" style="margin:0; margin-top:-0.3vw;">
+                            <div class="col-md-1" style="width:16%"></div>
+                            <div class="col-md-4 text-center"><span class="glyphicon chevron-big glyphicon-chevron-up" onclick="TypeUp()"></span><div class="createChar-tickerText" style="margin-top:-0.7vw; margin-bottom:-0.3vw;" id="skinCustom-type">1</div><span onclick="TypeDown()" class="glyphicon chevron-big glyphicon-chevron-down"></span></div>
+                            <div class="col-md-4 text-center"><span class="glyphicon chevron-big glyphicon-chevron-up" onclick="TextureUp()"></span><div class="createChar-tickerText" style="margin-top:-0.7vw; margin-bottom:-0.3vw;" id="skinCustom-texture">1</div><span onclick="TextureDown()" class="glyphicon chevron-big glyphicon-chevron-down"></span></div>
+                            <div class="col-md-1"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6"><span class="createChar-tickerText" onclick="resourceCall('showSkinClassSelect')" style="line-height:2.2vw;font-size:0.9vw;"><span class="glyphicon glyphicon-chevron-left" &nbsp;></span><span style="margin-left:-0.4vw;" class="glyphicon glyphicon-chevron-left"></span>&nbsp;BACK</span></div>
+                            <div class="col-md-6"><span class="createChar-tickerText" onclick="resourceCall('completeCharacterCreation')" style="line-height:2.2vw;font-size:0.9vw;">&nbsp;FINISH</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,17 @@
+﻿body
+{
+}
+
+.container {
+    text-align: center;
+    background-color: darkgray;
+    opacity: 0.8;
+    color: white;
+    max-height: 700px;
+    overflow: auto;
+    width: 400px;
+}
+
+.type{
+    font-size: 15px;
+}

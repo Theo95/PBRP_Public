@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<meta>
+  <info name="Paleto Bay Roleplay" author="Booth" type="gamemode" async="true"/>
+  <assembly ref="System.ComponentModel.DataAnnotations.dll"/>
+  <assembly ref="System.Xml.dll"/>
+  <assembly ref="System.Net.Http.dll"/>
+  <assembly ref="System.Linq.dll"/>
+  <assembly ref="EntityFramework.dll"/>
+  <assembly ref="EntityFramework.SqlServer.dll"/>
+  <assembly ref="System.Web.Extensions.dll"/>
+  <assembly ref="Newtonsoft.Json.dll"/>
+  <assembly ref="System.Threading.Tasks.dll"/>
+  <assembly ref="CryptSharp.dll"/>
+
+  <!-- Login scripts -->
+  <script src="Login/LoginManager.cs" type="server" lang="csharp" />
+  <script src="Login/client/login.js" type="client" lang="javascript" />
+  <file src="Login/client/login.html"/>
+  <file src="Login/client/charSelect.html"/>
+  <file src="Login/client/createNewCharacter.html"/>
+  <file src="Login/client/createCharSkinSelect.html"/>
+  <file src="Login/client/createCharSkinVars.html"/>
+  <!--<file src="res/audio/cr.mp3"/>-->
+
+  <!-- Globals -->
+  <script src="Globals/Message.cs" type="server" lang="csharp"/>
+  <script src="Globals/Globals.cs" type="server" lang="csharp"/>
+  <script src="Globals/Images.cs" type="server" lang="csharp"/>
+  <script src="Globals/PedSkins.cs" type="server" lang="csharp"/>
+  <script src="Globals/Payments/payments.js" type="client" lang="javascript"/>
+  <file src="Globals/Payments/globalEnterPin.html"/>
+  <file src="Globals/Payments/pin-machine.css"/>
+  
+  <!-- NPC shit -->
+  <script src="NPC/NPC.cs" type="server" lang="csharp"/>
+
+  <!-- Admin shit -->
+  <script src="Administrator/GeneralAdminCommands.cs" type="server" lang="csharp"/>
+  <script src="Administrator/PlayerAdminCommands.cs" type="server" lang="csharp"/>
+  <script src="Administrator/VehicleAdminCommands.cs" type="server" lang="csharp"/>
+  <script src="Administrator/adminClient.js" type="client" lang="javascript"/>
+
+  <!-- Player -->
+ <script src="Player/client/hudDisplay.js" type="client" lang="javascript"/>
+  <script src="Player/GeneralCommands.cs" type="server" lang="csharp"/>
+  <script src="Player/PlayerManager.cs" type="server" lang="csharp"/>
+  
+  <script src="Player/Radio/RadioManager.cs" type="server" lang="csharp"/>
+  
+  <!-- Injury -->
+  <script src="Player/Injured/injury.js" type="client" lang="javascript"/>
+  <script src="Player/Injured/InjuryManager.cs" type="server" lang="csharp" />
+  
+  <!-- Scoreboard -->
+  <script src="Scoreboard/UI/scoreboard.js" type="client" lang="javascript"/>
+  <file src="Scoreboard/UI/scoreboardMain.html"/>
+  <file src="Scoreboard/UI/scoreboardPlayerActions.html"/>
+  <file src="Scoreboard/UI/scoreboardAdminActions.html"/>
+  <script src="Scoreboard/ScoreboardManager.cs" type="server" lang="csharp" />
+
+  <!-- Phone -->
+  <file src="Player/Phone/UI/SmartPhone/smartHomeScreen.html"/>
+  <file src="Player/Phone/UI/SmartPhone/smartSettingsPage.html"/>
+  <file src="Player/Phone/UI/SmartPhone/smartSettingsInfo.html"/>
+  <file src="Player/Phone/UI/SmartPhone/selectSimCard.html"/>
+  <file src="Player/Phone/UI/SmartPhone/smartBootScreen.html"/>
+  <file src="Player/Phone/UI/SmartPhone/smartPhone.html"/>
+  <file src="Player/Phone/UI/SmartPhone/PhoneApp/smartPhoneHome.html"/>
+  <file src="Player/Phone/UI/SmartPhone/PhoneApp/smartPhoneDial.html"/>
+  <file src="Player/Phone/UI/SmartPhone/PhoneApp/smartPhoneCall.html"/>
+  <file src="Player/Phone/UI/SmartPhone/PhoneApp/smartPhoneRecent.html"/>
+  <file src="Player/Phone/UI/SmartPhone/PhoneApp/smartPhoneContacts.html"/>
+  <file src="Player/Phone/UI/SmartPhone/PhoneApp/smartPhoneShowContact.html"/>
+  <file src="Player/Phone/UI/SmartPhone/PhoneApp/smartPhoneNewContact.html"/>
+  <file src="Player/Phone/UI/SmartPhone/PhoneApp/smartPhoneEditContact.html"/>
+  <file src="Player/Phone/UI/SmartPhone/LockScreen/smartPhoneLockScreen.html"/>
+  <script src="Player/Phone/UI/phone.js" type="client" lang="javascript"/>
+  <file src="Player/Phone/UI/SmartPhone/PhoneApp/phoneapp.js"/>
+
+  <file src="Player/Phone/UI/SmartPhone/MessagesApp/smartMessagesHome.html"/>
+  <file src="Player/Phone/UI/SmartPhone/MessagesApp/smartMessagesConvo.html"/>
+  <file src="Player/Phone/UI/SmartPhone/MessagesApp/smartMessagesCompose.html"/>
+  <file src="Player/Phone/UI/SmartPhone/MessagesApp/messageapp.js"/>
+  <script src="Player/Phone/PhoneManager.cs" type="server" lang="csharp" />
+
+
+  <!-- Bank -->
+  <script src="Bank/BankManager.cs" type="server" lang="csharp"/>
+  <script src="Bank/BankCommands.cs" type="server" lang="csharp"/>
+  <script src="Bank/UI/bank.js" type="client" lang="javascript" />
+  <file src="Bank/UI/bankOption.html"/>
+  <file src="Bank/UI/bankChooseID.html"/>
+  <file src="Bank/UI/enterPin.html"/>
+  <file src="Bank/UI/transactionOptions.html"/>
+  <file src="Bank/UI/createNewAccount.html"/>
+
+  <!-- ATM -->
+  <script src="ATM/ATMCommands.cs" type="server" lang="csharp"/>
+  <script src="ATM/ATMManager.cs" type="server" lang="csharp"/>
+  <script src="ATM/UI/atm.js" type="client" lang="javascript"/>
+  <file src="ATM/UI/atmInsertCard.html"/>
+  <file src="ATM/UI/atmEnterPin.html"/>
+  <file src="ATM/UI/atmDashboard.html"/>
+  <file src="ATM/UI/atmDash.html"/>
+  <file src="ATM/UI/atmBalance.html"/>
+  <file src="ATM/UI/atmWithdraw.html"/>
+  <file src="ATM/UI/atmChangePin.html"/>
+
+  <!-- Inventory -->
+  <script src="UI/Inventory/inventory.js" type="client" lang="javascript"/>
+  <file src="UI/Inventory/inventory.css"/>
+  <file src="UI/Inventory/inventoryHome.html"/>
+  <file src="UI/Inventory/inventoryActions.html"/>
+  <file src="UI/Inventory/inventoryFrisk.html"/>
+  <script src="UI/Inventory/InventoryManager.cs" type="server" lang="csharp"/>
+  
+  <!-- InteractionMenu-->
+  <file src="UI/InteractionMenu/menu.html"/>
+  <file src="UI/InteractionMenu/menu.css"/>
+  <script src="UI/InteractionMenu/interactionMenu.js" type="client" lang="javascript"/>
+   <script src="UI/InteractionMenu/InteractionManager.cs" type="server" lang="csharp"/>
+
+  <!-- Vehicle -->
+  <script src="Vehicle/vehicleStreamInOut.js" type="client" lang="javascript"/>
+  <script src="Vehicle/VehicleManager.cs" type="server" lang="csharp"/>
+  <script src="Vehicle/GeneralVehicleCommands.cs" type="server" lang="csharp"/>
+
+  <script src="Vehicle/Dealership/VehicleDealerManager.cs" type="server" lang="csharp"/>
+  <script src="Vehicle/Dealership/vehdealer.js" type="client" lang="javascript"/>
+  <file src="Vehicle/Dealership/vehdealer-book.html"/>
+  <file src="Vehicle/Dealership/vehPage.html"/>
+  <file src="Vehicle/Dealership/dealerPreviewPanel.html"/>
+
+  <script src="Vehicle/DrivingTest/DrivingTestManager.cs" type="server" lang="csharp"/>
+  <!--<file src="Vehicle/client/dashboard.html"/>
+  <script src="Vehicle/client/Dashboard.js" type="client" lang="javascript"/>
+  <file src="Vehicle/client/d3gauge.js"/>
+  <file src="Vehicle/client/d3.v2.js"/>-->
+  <file src="Vehicle/DrivingTest/Client/testinterface.html"/>
+  <script src="Vehicle/DrivingTest/Client/drivingtest.js" type="client" lang="javascript"/>
+  <file src="Vehicle/DrivingTest/Client/testreport.html"/>
+  <file src="Vehicle/DrivingTest/Client/res/highway.ttf"/>
+  <file src="Vehicle/DrivingTest/Client/res/testReportStyle.css"/>
+  <file src="Vehicle/DrivingTest/Client/testmenu.html"/>
+  
+  <script src="Vehicle/Fuel/FuelManager.cs" type="server" lang="csharp"/>
+  <script src="Vehicle/Fuel/fuel.js" type="client" lang="javascript"/>
+
+  <!-- UI -->
+  <file src="Player/client/notification.html" />
+  <file src="Player/client/notification.css" />
+  
+  <!--Settings-->
+  <file src="UI/Settings/settingsMain.html"/>
+  <file src="UI/Settings/settingsPerformance.html"/>
+
+  <!-- Resources -->
+  <file src="res/jquery-3.1.1.min.js" />
+  <file src="res/jquery.minicolors.min.js"/>
+  <file src="res/jquery.minicolors.css"/>
+  <file src="res/jquery.minicolors.png"/>
+  <file src="res/css/bootstrap.min.css" />
+  <file src="res/bootstrap.min.js" />
+  <file src="res/style.css"/>
+  <file src="res/createNewChar.png"/>
+  <file src="res/alertify.min.js"/>
+  <file src="res/alertify.min.css"/>
+  <file src="res/semantic.min.css"/>
+  <file src="res/modernizr.2.5.3.min.js"/>
+  <file src="res/jquery-ui.min.css"/>
+  <file src="res/jquery-ui.min.js"/>
+  <file src="res/jquery-ui.theme.min.css"/>
+  <file src="res/jquery-ui.structure.min.css"/>
+  <file src="res/turn.js"/>
+  <file src="res/jquery.min.1.7.js"/>
+  <file src="res/vehdealer-book.css"/>
+  <script src="res/ExtensionMethods/StringExtensions.cs" type="server" lang="csharp"/>
+  <script src="res/ExtensionMethods/PedExtensionMethods.cs" type="server" lang="csharp"/>
+  <script src="res/ExtensionMethods/APIExtensions.cs" type="server" lang="csharp"/>
+  <script src="res/ExtensionMethods/Vector3Extensions.cs" type="server" lang="csharp"/>
+  <script src="res/ExtensionMethods/VehicleExtensions.cs" type="server" lang="csharp"/>
+  <script src="res/ExtensionMethods/WeaponExtensions.cs" type="server" lang="csharp"/>
+  <script src="res/ExtensionMethods/InventoryExtensionMethods.cs" type="server" lang="csharp"/>
+
+  <file src="res/fonts/glyphicons-halflings-regular.ttf"/>
+  <file src="res/fonts/glyphicons-halflings-regular.eot"/>
+  <file src="res/fonts/glyphicons-halflings-regular.svg"/>
+  <file src="res/fonts/glyphicons-halflings-regular.woff"/>
+  <file src="res/fonts/glyphicons-halflings-regular.woff2"/>
+  <file src="res/test.png"/>
+
+  <!-- Models -->
+  <script src="Models/Player.cs" type="server" lang="csharp"/>
+  <script src="Models/Vehicle.cs" type="server" lang="csharp"/>
+  <script src="Models/GasStation.cs" type="server" lang="csharp"/>
+  <script src="Models/Master.cs" type="server" lang="csharp"/>
+  <script src="Models/Faction.cs" type="server" lang="csharp"/>
+  <script src="Models/Rank.cs" type="server" lang="csharp"/>
+  <script src="Models/Ban.cs" type="server" lang="csharp"/>
+  <script src="Models/Weapon.cs" type="server" lang="csharp"/>
+  <script src="Models/Inventory.cs" type="server" lang="csharp"/>
+  <script src="Models/BankAccount.cs" type="server" lang="csharp"/>
+  <script src="Models/License.cs" type="server" lang="csharp"/>
+  <script src="Models/DMVTest.cs" type="server" lang="csharp"/>
+  <script src="Models/Property.cs" type="server" lang="csharp"/>
+  <script src="Models/Business.cs" type="server" lang="csharp"/>
+  <script src="Models/House.cs" type="server" lang="csharp"/>
+  <script src="Models/Phone.cs" type="server" lang="csharp"/>
+  <script src="Models/PhoneLog.cs" type="server" lang="csharp"/>
+  <script src="Models/PhoneApp.cs" type="server" lang="csharp"/>
+  <script src="Models/PhoneContact.cs" type="server" lang="csharp"/>
+  <script src="Models/SimCards.cs" type="server" lang="csharp"/>
+  <script src="Models/Skin.cs" type="server" lang="csharp"/>
+  <script src="Models/Prison.cs" type="server" lang="csharp"/>
+  <script src="Models/PDLog.cs" type="server" lang="csharp"/>
+  <script src="Models/AttackData.cs" type="server" lang="csharp"/>
+  <script src="Models/Wildlife.cs" type="server" lang="csharp"/>
+  <script src="Models/ShopItem.cs" type="server" lang="csharp"/>
+  <script src="Models/Weather.cs" type="server" lang="csharp"/>
+  <script src="Models/Tree.cs" type="server" lang="csharp" />
+  <script src="Models/Server.cs" type="server" lang="csharp" />
+  
+  
+  <!-- Log Models -->
+  <script src="Models/Logs/Connection.cs" type="server" lang="csharp"/>
+  <script src="Models/Logs/CommandLog.cs" type="server" lang="csharp"/>
+  <script src="Models/Logs/WeaponLog.cs" type="server" lang="csharp"/>
+  <script src="Models/Logs/CashLog.cs" type="server" lang="csharp"/>
+  <script src="Models/Logs/AttackLog.cs" type="server" lang="csharp"/>
+  
+  <!-- Repositories -->
+  <script src="Repository/MasterRepository.cs" type="server" lang="csharp"/>
+  <script src="Repository/PlayerRepository.cs" type="server" lang="csharp"/>
+  <script src="Repository/VehicleRepository.cs" type="server" lang="csharp"/>
+  <script src="Repository/GasStationRepository.cs" type="server" lang="csharp"/>
+  <script src="Repository/FactionRepository.cs" type="server" lang="csharp"/>
+  <script src="Repository/RankRepository.cs" type="server" lang="csharp"/>
+  <script src="Repository/BanRepository.cs" type="server" lang="csharp"/>
+  <script src="Repository/WeaponRepository.cs" type="server" lang="csharp"/>
+  <script src="Repository/InventoryRepository.cs" type="server" lang="csharp"/>
+  <script src="Repository/BankRepository.cs" type="server" lang="csharp"/>
+  <script src="Repository/LicenseRepository.cs" type="server" lang="csharp"/>
+  <script src="Repository/PropertyRepository.cs" type="server" lang="csharp"/>
+  <script src="Repository/PhoneRepository.cs" type="server" lang="csharp"/>
+  <script src="Repository/PhoneLogRepository.cs" type="server" lang="csharp"/>
+  <script src="Repository/PhoneAppRepository.cs" type="server" lang="csharp"/>
+  <script src="Repository/PhoneContactRepository.cs" type="server" lang="csharp"/>
+  <script src="Repository/SimCardRepository.cs" type="server" lang="csharp"/>
+  <script src="Repository/SkinRepository.cs" type="server" lang="csharp"/>
+  <script src="Repository/PrisonRepository.cs" type="server" lang="csharp"/>
+  <script src="Repository/PDLogRepository.cs" type="server" lang="csharp"/>
+  <script src="Repository/ShopItemRepository.cs" type="server" lang="csharp"/>
+  <script src="Repository/ServerRepository.cs" type="server" lang="csharp"/>
+  
+  <!-- Log Repositories -->
+  <script src="Repository/Logs/ConnectionLogRepository.cs" type="server" lang="csharp" />
+  <script src="Repository/Logs/CommandLogRepository.cs" type="server" lang="csharp" />
+  <script src="Repository/Logs/WeaponLogRepository.cs" type="server" lang="csharp" />
+  <script src="Repository/Logs/CashLogRepository.cs" type="server" lang="csharp" />
+  <script src="Repository/Logs/AttackLogRepository.cs" type="server" lang="csharp" />
+  
+  <!-- Prison Scripts -->
+  <script src="Prison/CellManager.cs" type="server" lang="csharp"/>
+  <script src="Prison/PrisonManager.cs" type="server" lang="csharp"/>
+  
+  <!-- Armoury Scripts -->
+  <script src="Factions/PD/Armoury/PDArmouryManager.cs" type="server" lang="csharp"/>
+
+  <!-- Faction Scripts -->
+  <script src="Factions/FactionManager.cs" type="server" lang="csharp"/>
+  <script src="Factions/FactionGeneralCommands.cs" type="server" lang="csharp"/>
+  <script src="Factions/FactionVehicleCommands.cs" type="server" lang="csharp"/>
+  <script src="Factions/FactionPlayerCommands.cs" type="server" lang="csharp"/>
+
+  <!-- PD Scripts-->
+  <script src="Factions/PD/PDManager.cs" type="server" lang="csharp"/>
+  <script src="Factions/PD/PDGeneralCommands.cs" type="server" lang="csharp"/>
+  <script src="Factions/PD/PDArrestCommands.cs" type="server" lang="csharp"/>
+
+  <!-- Property Scripts -->
+  <script src="Property/PropertyManager.cs" type="server" lang="csharp"/>
+  <script src="Property/PropertyAdminCommands.cs" type="server" lang="csharp"/>
+  <script src="Property/PropertyGeneralCommands.cs" type="server" lang="csharp"/>
+  
+  <!--Business Scripts-->
+  <file src="Property/Business/UI/Shop/shop.css"/>
+  <file src="Property/Business/UI/Shop/shopMain.html"/>
+  <file src="Property/Business/UI/Mechanic/repairMain.html"/>
+  <file src="Property/Business/UI/Mechanic/vehicleListGarage.html"/>
+  <script src="Property/Business/UI/business.js" type="client" lang="javascript"/>
+  <script src="Property/Business/BusinessManager.cs" type="server" lang="csharp"/>
+
+  <!-- Sidejobs -->
+  <script src="Sidejobs/Client/sidejob.js" type="client" lang="javascript"/>
+  <script src="Sidejobs/Client/Fishing.js" type="client" lang="javascript"/>
+  
+  <script src="Sidejobs/Farmjob.cs" type="server" lang="csharp"/>
+  <script src="Sidejobs/Fishing.cs" type="server" lang="csharp"/>  
+  <file src="Sidejobs/Client/left.png"/>
+  <file src="Sidejobs/Client/right.png"/>
+
+  <script src="Sidejobs/Hunting/HuntingManager.cs" type="server" lang="csharp"/>
+  <script src="Sidejobs/Hunting/hunting.js" type="client" lang="javascript"/>
+  
+  <script src="Sidejobs/Lumberjack/LumberjackManager.cs" type="server" lang="csharp"/>
+  
+  <!-- Skills -->
+  <script src="Skills/Weapon/skill_effects.js" type="client" lang="javascript"/>
+  
+  <file src="res/fonts/Roboto-Regular.ttf" />
+  <file src="res/fonts/Roboto-Thin.ttf" />
+
+  <script src="Database.cs" type="server" lang="csharp" />
+  <script src="LogDb.cs" type="server" lang="csharp" />
+  <script src="ConnectionManager.cs" type="server" lang="csharp" />
+  <script src="ServerInit.cs" type="server" lang="csharp"/>
+
+  
+  <!-- Utils -->
+  <script src="Utilities/Utils.cs" type="server" lang="csharp"/>
+  <script src="Utilities/utils.js" type="client" lang="javascript"/>
+  
+</meta>

@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="/res/jquery-3.1.1.min.js"></script>
+    <link href="/res/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/res/style.css" rel="stylesheet" />
+
+    <style>
+        .playerInfo {
+            font-size: 28px;
+            color: #0c0c0c;
+            height: 100px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bolder;
+            bottom: 0;
+            width: inherit;
+            position: absolute;
+        }
+
+    </style>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#choose3').attr("opacity", "0.2");
+        });
+
+        var choiceMade = false;
+
+        function bankChoice(val)
+        {
+            if (!choiceMade)
+                resourceCall('newBankAccountChoice', val);
+            choiceMade = true;
+        }
+    </script>
+</head>
+<body style="background-color: transparent;">
+    <div class="container">
+        <div class="vertical-center-row" style="height:720px; width:1200px;">
+            <div style="text-align:center">
+                <img id="logo" width="250" />
+            </div>
+            <div class="login-box" style="padding: 20px;">
+                <div id="charList" class="login-box-body">
+                    <div class="row">
+                        <div class="col-xs-4 center">
+                            <div id="choose1" class='char-col hvr-float' onclick="bankChoice(0)">
+                                <img id='currentAccImg' src=''/>
+                                <div class='playerInfo vertical-center-row'><div>CURRENT ACCOUNT</div></div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 center">
+                            <div  id="choose2" onclick="bankChoice(1)" class='char-col hvr-float'>
+                                <img id='savingAccImg' src='' />
+                                <div class='playerInfo vertical-center-row'><div>SAVINGS ACCOUNT</div></div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 center">
+                            <div id="choose3" class='char-col'>
+                                <img id='businessAccImg' src='' />
+                                <div class='playerInfo vertical-center-row'><div>BUSINESS ACCOUNT</div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

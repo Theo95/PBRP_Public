@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="../../res/jquery-3.1.1.min.js"></script>
+    <link href="../../res/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../res/style.css" rel="stylesheet" />
+    <script>
+        function LoadOptions() {
+            $('#options1').hide().delay(200).fadeIn("slow");
+            $('#options2').hide().delay(500).fadeIn("slow");
+            $('#options3').hide().delay(800).fadeIn("slow");
+            $('#options4').hide().delay(1100).fadeIn("slow");
+            $('#options5').hide().delay(1400).fadeIn("slow");
+            $('#options6').hide().delay(1700).fadeIn("slow");
+            $('#options7').hide().delay(2000).fadeIn("slow");
+        }
+
+    </script>
+</head>
+    <body style="background-color: transparent;">
+        <div class="container">
+            <div class="vertical-center-row row" style="width:100%; height:100%">
+                <div class="col-md-5"></div>
+                <div class="col-md-4" style="text-align:right;">
+                    <br />
+                    <br />
+                    <div style="height:70px;"></div>
+                    <div id="options1" class="hvr-pulse-grow transaction-option" onclick="resourceCall('transactionBank', 0)">BALANCE</div><br/>
+                    <div id="options2" class="transaction-option hvr-pulse-grow" onclick="resourceCall('transactionBank', 1)">DEPOSIT</div><br />
+                    <div id="options3" class="transaction-option hvr-pulse-grow" onclick="resourceCall('transactionBank', 2)">WITHDRAW</div><br />
+                    <div id="options4" class="transaction-option hvr-pulse-grow" onclick="resourceCall('transactionBank', 3)">TRANSFER</div><br />
+                    <div id="options5" class="transaction-option hvr-pulse-grow" onclick="resourceCall('transactionBank', 4)">CHANGE PIN</div><br />
+                    <div id="options6" class="transaction-option hvr-pulse-grow" onclick="resourceCall('transactionBank', 5)">REPLACE CARD</div><br />
+                    <div id="options7" class="transaction-option hvr-pulse-grow" onclick="resourceCall('closeBank')">EXIT</div><br />
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,187 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="../../res/jquery-3.1.1.min.js"></script>
+    <link href="../../res/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../res/style.css" rel="stylesheet" />
+    <link href="pin-machine.css" rel="stylesheet" />
+
+    <script type="text/javascript">
+        var pin = "";
+        var attRemain = 0;
+
+        function InitiatePaymentPin(attemptsRemaining)
+        {
+            attRemain = attemptsRemaining;
+
+            if (attRemain == 0)
+            {
+                $('#msg-text').html("ACCOUNT LOCKED | CONTACT BANK");
+            }
+        }
+
+        function numberButtonPressed(number)
+        {
+            if (number === -2)
+            {
+                ValidatePin();
+                return;
+            }
+            else if (number === -1) {
+                pin = pin.slice(0, -1);
+                $('#value-text').html(pin.replace(/./gi, '*'));
+                return;
+            }
+            else if (number > 9)
+            {
+                number = String.fromCharCode(number);
+            }
+            if (pin.length < 4) {
+                pin = pin + number;
+                $('#value-text').html(pin.replace(/./gi, '*'));
+            }
+        }
+
+        function ValidatePin()
+        {
+            $('#msg-text').text(pin);
+            if (pin.length == 4)
+            {
+                if (attRemain != 0) {
+                    resourceCall("validatePaymentPin", pin, attRemain);
+                    setTimeout(function () {
+                        $('#msg-text').html("PLEASE ENTER PIN: INVALID");
+                        $('#value-text').text("");
+                        pin = "";
+                        attRemain--;
+
+                        if (attRemain == 0) {
+                            $('#msg-text').html("ACCOUNT LOCKED | CONTACT BANK");
+                        }
+                    }, 500);
+                }
+            }
+            else {
+                $('#msg-text').html("PLEASE ENTER PIN: INVALID");
+            }
+        }
+        
+    </script>
+</head>
+    <body style="background-color: transparent;">
+        <div class="container">
+            <div class="vertical-center-row">
+                <div id="main-con">
+                    <div class="row" style="height:1vw;"></div>
+                    <div class="row" style="text-align:center;">
+                        <div class="pin-screen">
+                            <div id="msg-text">PLEASE ENTER PIN:</div>
+                            <div id="value-text"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div style="margin:0 auto; width:14vw;">
+                            <table style="margin:0 auto">
+                                <tr class="pin-row">
+                                    <td>
+                                        <div id="1" class="pin-button" onclick="numberButtonPressed(1)">
+                                            <div class="pin-smalltext"></div>
+                                            <div class="pin-number">1</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="2" class="pin-button" onclick="numberButtonPressed(2)">
+                                            <div class="pin-smalltext">ABC</div>
+                                            <div class="pin-number">2</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="3" class="pin-button" onclick="numberButtonPressed(3)">
+                                            <div class="pin-smalltext">DEF</div>
+                                            <div class="pin-number">3</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="redButton" class="pin-button pin-number" onclick="resourceCall('closeGlobalPinMachine')"style="background-color:#f00">C</div>
+                                    </td>
+                                </tr>
+                                <tr class="pin-row">
+                                    <td>
+                                        <div id="4" class="pin-button" onclick="numberButtonPressed(4)">
+                                            <div class="pin-smalltext">GHI</div>
+                                            <div class="pin-number">4</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="5" class="pin-button" onclick="numberButtonPressed(5)">
+                                            <div class="pin-smalltext">JKL</div>
+                                            <div class="pin-number">5</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="6" class="pin-button" onclick="numberButtonPressed(6)">
+                                            <div class="pin-smalltext">MNO</div>
+                                            <div class="pin-number">6</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="greenButton" class="pin-button pin-number" onclick="ValidatePin()" style="background-color:#0f0">OK</div>
+                                    </td>
+                                </tr>
+                                <tr class="pin-row">
+                                    <td>
+                                        <div id="7" class="pin-button" onclick="numberButtonPressed(7)">
+                                            <div class="pin-smalltext">PQRS</div>
+                                            <div class="pin-number">7</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="8" class="pin-button" onclick="numberButtonPressed(8)">
+                                            <div class="pin-smalltext">TUV</div>
+                                            <div class="pin-number">8</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="9" class="pin-button" onclick="numberButtonPressed(9)">
+                                            <div class="pin-smalltext">WXYZ</div>
+                                            <div class="pin-number">9</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="blueButton" class="pin-button" style="background-color:#00f"></div>
+                                    </td>
+                                </tr>
+                                <tr class="pin-row">
+                                    <td>
+                                        <div id="asterisk" class="pin-button">
+                                            <div class="pin-smalltext" style="height:0.7vw"></div>
+                                            <div class="pin-number">*</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="0" class="pin-button" onclick="numberButtonPressed(0)">
+                                            <div class="pin-smalltext"> </div>
+                                            <div class="pin-number">0</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="hash" class="pin-button">
+                                            <div class="pin-smalltext"></div>
+                                            <div class="pin-number">#</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="yellowButton" class="pin-button" style="background-color:#ffd800"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row" style="height:1vw;"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

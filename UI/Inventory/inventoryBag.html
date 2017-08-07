@@ -1,0 +1,313 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="../../res/jquery-3.1.1.min.js"></script>
+    <script src="../../res/jquery-ui.min.js"></script>
+    <link href="../../res/jquery-ui.min.css" rel="stylesheet" />
+    <link href="../../res/jquery-ui.structure.min.css" rel="stylesheet" />
+    <link href="../../../../res/jquery-ui.theme.min.css" rel="stylesheet" />
+    <link href="../../res/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../res/style.css" rel="stylesheet" />
+    <link href="inventory.css" rel="stylesheet"/>
+
+    <script type="text/javascript">
+        var formatter = null;
+
+        $(document).ready(function () {
+            
+            setTimeout(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+                //$('[data-toggle="tooltip"]').tooltip('option', 'position', { my: 'center bottom' });
+                //$('[data-toggle="tooltip"]').tooltip('option', 'tooltipClass', 'bottom');
+            }, 600);
+
+            formatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 0,
+            });
+
+            for (var i = 1; i <= 4; i++) {
+                for (var j = 1; j <= 4; j++) {
+                    $('#inv-' + i.toString() + j.toString()).droppable({
+                        accept: 'img',
+                        drop: handleItemDrop,
+                        over: onItemDragOver,
+                        classes: {
+                            "ui-droppable": "highlight",
+                            "ui-droppable-hover": "hovered"
+                        }
+                    });
+                }
+            }
+
+            $('.prox-container').droppable({
+                accept: 'img',
+                drop: onItemDropped,
+                over: onItemDragOverDrop
+            });
+        });
+        function populateInventoryItems(data, proxData)
+        {
+            var invItems = jQuery.parseJSON(data);
+  
+            for (var i = 0; i < invItems.length; i++) 
+            {
+                if (invItems[i].Type == 2) {
+                    var gender = parseInt(invItems[i].Gender) == 0 ? "MISS" : "MR";
+                    $('#inv-' + invItems[i].SlotPosStr).children().attr("title",
+                        invItems[i].Name + "\x0A " + invItems[i].Value + "\x0A" + gender + " " + invItems[i].OwnerName.toString().toUpperCase());
+                }
+                else if (invItems[i].Type == 27 || invItems[i].Type == 28 || invItems[i].Type == 29)
+                {
+                    $('#inv-' + invItems[i].SlotPosStr).children().attr("title", formatter.format(invItems[i].Value));
+                }
+
+                $('#inv-' + invItems[i].SlotPosStr).append('<img class="inv-item" style="height:' +
+                    2.8 * parseInt(invItems[i].SlotSpan[0]) + 'vw; width:' + (2.8 * parseInt(invItems[i].SlotSpan[1])) + 'vw;"  src="' + invItems[i].Image +
+                    '" data-toggle="tooltip" data-placement="bottom" title="' + invItems[i].Name + '"/>');
+
+                for (var j = parseInt(invItems[i].SlotPosStr[0]); j < parseInt(invItems[i].SlotPosStr[0]) + invItems[i].SlotSpan[0]; j++)
+                {
+                    for (var k = parseInt(invItems[i].SlotPosStr[1]); k < parseInt(invItems[i].SlotPosStr[1]) + invItems[i].SlotSpan[1]; k++)
+                    {
+                        $("#inv-" + j.toString() + k.toString()).data({
+                            itemId: invItems[i].Id
+                        });
+                    }
+                }
+
+                $('#inv-' + invItems[i].SlotPosStr).children().data({
+                    itemId: invItems[i].Id,
+                    colSpan: invItems[i].SlotSpan[1],
+                    rowSpan: invItems[i].SlotSpan[0],
+                    vOffset: 50 * (invItems[i].SlotSpan[0] - 1),
+                    hOffset: 50 * (invItems[i].SlotSpan[1] - 1),
+                    type: invItems[i].Type,
+                    value: invItems[i].Value,
+                    prox: false
+                });
+                $('#inv-' + invItems[i].SlotPosStr).children().draggable({
+                    containment: '.vertical-center-row',
+                    cursor: 'move',
+                    snap: '.vertical-center-row',
+                    revert: true,
+                    stop: resetSlotColor,
+                    create: function (event, ui) {
+                        $(this).position({
+                            of: $('#inv-' + invItems[i].SlotPosStr), at: "center+" + $(this).data('hOffset') +
+                            "% center+" + $(this).data('vOffset') + "%", my: "center"
+                        });
+                    }
+                });
+            }
+            $('.inv-cell img').mousedown(function (e) {
+                if (e.which === 3) {
+                    resourceCall("inventoryItemSelected", $(this).data("itemId"));
+                }
+                
+            });
+
+            $('.inv-header-cell img').dblclick(function () {
+                resourceCall("inventoryItemSelected", $(this).data("itemId"));
+            });
+
+            populateProximityItems(proxData);
+        }
+
+        function populateProximityItems(data)
+        {
+            var proxItems = jQuery.parseJSON(data);
+
+            $('h2').text("Proximity Items (" + proxItems.length + ")");
+
+            $('h2').data("count", proxItems.length);
+
+            for (var i = 0; i < proxItems.length; i++) {
+                $('.prox-container').append('<div class="prox-cell flex"><img id="prox-' + i + '" class="inv-item" src="' + proxItems[i].Image +
+                    '" style="height:2.1vw"  data-toggle="tooltip" data-placement="bottom" title="' + proxItems[i].Name + '"/></div>');
+
+                $('#prox-' + i).data({
+                    itemId: proxItems[i].Id,
+                    colSpan: proxItems[i].SlotSpan[1],
+                    rowSpan: proxItems[i].SlotSpan[0],
+                    vOffset: 50 * (proxItems[i].SlotSpan[0] - 1),
+                    hOffset: 50 * (proxItems[i].SlotSpan[1] - 1),
+                    prox: true,
+                });
+
+                $('#prox-' + i).draggable({
+                    containment: '.vertical-center-row',
+                    cursor: 'move',
+                    snap: '.vertical-center-row',
+                    revert: true
+                });
+            }
+        }
+
+        function handleItemDrop(event, ui) {
+            resetSlotColor();
+
+            var rowPos = $(this).attr('id').replace('inv-', '')[0];
+            var colPos = $(this).attr('id').replace('inv-', '')[1];
+
+            for (var j = parseInt(rowPos); j < parseInt(rowPos) + parseInt(ui.draggable.data('rowSpan')); j++) {
+                for (var k = parseInt(colPos); k < parseInt(colPos) + parseInt(ui.draggable.data('colSpan')); k++) {
+                    var item = $("#inv-" + j.toString() + k.toString());
+                    if (item.length <= 0) return;
+                    if (item.data("itemId") != null && item.data("itemId") != ui.draggable.data("itemId"))
+                        return;
+                }
+            }
+
+            resetSlotId(ui.draggable.data('itemId'));
+
+            for (var j = parseInt(rowPos); j < parseInt(rowPos) + parseInt(ui.draggable.data('rowSpan')); j++) {
+                for (var k = parseInt(colPos); k < parseInt(colPos) + parseInt(ui.draggable.data('colSpan')); k++) {
+                    var item = $("#inv-" + j.toString() + k.toString());
+                    item.data('itemId', ui.draggable.data('itemId'));
+                }
+            }
+
+            ui.draggable.position({
+                of: $(this), at: "center+" + ui.draggable.data('hOffset') +
+                "% center+" + ui.draggable.data('vOffset') + "%", my: "center"
+            });
+            ui.draggable.draggable('option', 'revert', false);
+            if (ui.draggable.data("prox")) {
+                ui.draggable.data("prox", false);
+                $('h2').text("Proximity Items (" + (parseInt($('h2').data("count")) - 1) + ")");
+            }
+
+            resourceCall("onInventoryItemMoved", ui.draggable.data("itemId"), rowPos, colPos);
+        }
+
+        function onItemDragOver(event, ui)
+        {
+            var rowPos = $(this).attr('id').replace('inv-', '')[0];
+            var colPos = $(this).attr('id').replace('inv-', '')[1];
+
+            ui.draggable.draggable('option', 'revert', true);
+
+            $(".ui-draggable-dragging").css("height", 2.8 * parseInt(ui.draggable.data('rowSpan')) + "vw");
+            $(".ui-draggable-dragging").css("width", 2.8 * parseInt(ui.draggable.data('colSpan')) + "vw");
+
+            resetSlotColor();
+
+            for (var j = parseInt(rowPos); j < parseInt(rowPos) + parseInt(ui.draggable.data('rowSpan')); j++) {
+                for (var k = parseInt(colPos); k < parseInt(colPos) + parseInt(ui.draggable.data('colSpan')); k++) {
+                    var item = $("#inv-" + j.toString() + k.toString());
+                    console.log(item.data("itemId"));
+                    if (item.length <= 0) { outOfBounds($(this), ui.draggable); return; }
+                    if (item.data("itemId") != null && item.data("itemId") != ui.draggable.data("itemId"))
+                        item.css("border-color", "red");
+                    else
+                        item.css("border-color", "khaki");
+                }
+            }
+        }
+
+        function onItemDragOverDrop(event, ui)
+        {
+            $(".ui-draggable-dragging").css("height", "2.8vw");
+            $(".ui-draggable-dragging").css("width", "2.8vw");
+
+            resetSlotColor();
+        }
+
+        function onItemDropped(event, ui)
+        {
+            if (ui.draggable.data("prox")) return;
+
+            resourceCall("actionSelected", ui.draggable.data("itemId"), "DROP");
+
+            ui.draggable.hide();
+            ui.draggable.data("prox", true);
+            resetSlotColor();
+        }
+
+        function resetSlotColor()
+        {
+            for (var i = 1; i <= 4; i++)
+                for (var j = 1; j <= 4; j++)
+                    $('#inv-' + i.toString() + j.toString()).css("border-color", "transparent");
+        }
+        function resetSlotId(id) {
+            for (var j = 1; j <= 4; j++)
+                for (var k = 1; k <= 4; k++)
+                    if ($('#inv-' + j.toString() + k.toString()).data('itemId') == id)
+                        $('#inv-' + j.toString() + k.toString()).removeData('itemId');
+        }
+
+        function outOfBounds(element, draggable)
+        {
+            var rowPos = element.attr('id').replace('inv-', '')[0];
+            var colPos = element.attr('id').replace('inv-', '')[1];
+
+            for (var j = parseInt(rowPos); j < parseInt(rowPos) + parseInt(draggable.data('rowSpan')); j++) 
+                for (var k = parseInt(colPos); k < parseInt(colPos) + parseInt(draggable.data('colSpan')); k++)
+                    $("#inv-" + j.toString() + k.toString()).css("border-color", "red");
+        }
+    </script>
+
+    <script>
+
+
+    </script>
+</head>
+    <body style="background-color: transparent;">
+        <div class="container">
+            
+            <div class="vertical-center-row" style="height:24vw; width:30vw;">
+                <div class="row">
+                    <div class="col-md-4">
+                        <!-- Proximity Box -->
+                        <div class="prox-container">
+                            <h2>Proximity Items (0)</h2>                      
+           
+                        </div>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-7">
+                        <!--Inventory Box-->
+                        <div class="inv-header-row flex">
+                            <div id="inv-return-slot" class="inv-cell flex"><img class="inv-item" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhLS0gQ3JlYXRlZCB3aXRoIElua3NjYXBlIChodHRwOi8vd3d3Lmlua3NjYXBlLm9yZy8pIC0tPgoKPHN2ZwogICB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iCiAgIHhtbG5zOmNjPSJodHRwOi8vY3JlYXRpdmVjb21tb25zLm9yZy9ucyMiCiAgIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyIKICAgeG1sbnM6c3ZnPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIgogICB4bWxuczpzb2RpcG9kaT0iaHR0cDovL3NvZGlwb2RpLnNvdXJjZWZvcmdlLm5ldC9EVEQvc29kaXBvZGktMC5kdGQiCiAgIHhtbG5zOmlua3NjYXBlPSJodHRwOi8vd3d3Lmlua3NjYXBlLm9yZy9uYW1lc3BhY2VzL2lua3NjYXBlIgogICB2ZXJzaW9uPSIxLjEiCiAgIHdpZHRoPSIzNSIKICAgaGVpZ2h0PSIzMy45MyIKICAgaWQ9InN2ZzIiCiAgIHhtbDpzcGFjZT0icHJlc2VydmUiCiAgIGlua3NjYXBlOnZlcnNpb249IjAuOTEgcjEzNzI1IgogICBzb2RpcG9kaTpkb2NuYW1lPSJXaGl0ZV9sZWZ0X2Fycm93LnN2ZyI+PHNvZGlwb2RpOm5hbWVkdmlldwogICAgIHBhZ2Vjb2xvcj0iI2ZmZmZmZiIKICAgICBib3JkZXJjb2xvcj0iIzY2NjY2NiIKICAgICBib3JkZXJvcGFjaXR5PSIxIgogICAgIG9iamVjdHRvbGVyYW5jZT0iMTAiCiAgICAgZ3JpZHRvbGVyYW5jZT0iMTAiCiAgICAgZ3VpZGV0b2xlcmFuY2U9IjEwIgogICAgIGlua3NjYXBlOnBhZ2VvcGFjaXR5PSIwIgogICAgIGlua3NjYXBlOnBhZ2VzaGFkb3c9IjIiCiAgICAgaW5rc2NhcGU6d2luZG93LXdpZHRoPSIxOTIwIgogICAgIGlua3NjYXBlOndpbmRvdy1oZWlnaHQ9IjEwMTciCiAgICAgaWQ9Im5hbWVkdmlldzE4IgogICAgIHNob3dncmlkPSJmYWxzZSIKICAgICBmaXQtbWFyZ2luLXRvcD0iMCIKICAgICBmaXQtbWFyZ2luLWxlZnQ9IjAiCiAgICAgZml0LW1hcmdpbi1yaWdodD0iMCIKICAgICBmaXQtbWFyZ2luLWJvdHRvbT0iMCIKICAgICBpbmtzY2FwZTp6b29tPSIxMi42MTY0OTkiCiAgICAgaW5rc2NhcGU6Y3g9IjE3Ljk2OTI1MSIKICAgICBpbmtzY2FwZTpjeT0iMTcuMjMxMTA5IgogICAgIGlua3NjYXBlOndpbmRvdy14PSItOCIKICAgICBpbmtzY2FwZTp3aW5kb3cteT0iLTgiCiAgICAgaW5rc2NhcGU6d2luZG93LW1heGltaXplZD0iMSIKICAgICBpbmtzY2FwZTpjdXJyZW50LWxheWVyPSJzdmcyIiAvPjxtZXRhZGF0YQogICAgIGlkPSJtZXRhZGF0YTgiPjxyZGY6UkRGPjxjYzpXb3JrCiAgICAgICAgIHJkZjphYm91dD0iIj48ZGM6Zm9ybWF0PmltYWdlL3N2Zyt4bWw8L2RjOmZvcm1hdD48ZGM6dHlwZQogICAgICAgICAgIHJkZjpyZXNvdXJjZT0iaHR0cDovL3B1cmwub3JnL2RjL2RjbWl0eXBlL1N0aWxsSW1hZ2UiIC8+PGRjOnRpdGxlIC8+PC9jYzpXb3JrPjwvcmRmOlJERj48L21ldGFkYXRhPjxkZWZzCiAgICAgaWQ9ImRlZnM2Ij48Y2xpcFBhdGgKICAgICAgIGlkPSJjbGlwUGF0aDE4Ij48cGF0aAogICAgICAgICBkPSJNIDAsNzkyIDEyMjQsNzkyIDEyMjQsMCAwLDAgMCw3OTIgeiIKICAgICAgICAgaWQ9InBhdGgyMCIKICAgICAgICAgaW5rc2NhcGU6Y29ubmVjdG9yLWN1cnZhdHVyZT0iMCIgLz48L2NsaXBQYXRoPjxjbGlwUGF0aAogICAgICAgaWQ9ImNsaXBQYXRoMjYiPjxwYXRoCiAgICAgICAgIGQ9Im0gMjQ4LjQwNiwzNiA3MjcuOTA5LDAgMCw3MDAuOTEyIC03MjcuOTA5LDAgMCwtNzAwLjkxMiB6IgogICAgICAgICBpZD0icGF0aDI4IgogICAgICAgICBpbmtzY2FwZTpjb25uZWN0b3ItY3VydmF0dXJlPSIwIiAvPjwvY2xpcFBhdGg+PGNsaXBQYXRoCiAgICAgICBpZD0iY2xpcFBhdGg1MCI+PHBhdGgKICAgICAgICAgZD0ibSAwLDAgMTIyNCwwIDAsNzkyIEwgMCw3OTIgMCwwIHoiCiAgICAgICAgIGlkPSJwYXRoNTIiCiAgICAgICAgIGlua3NjYXBlOmNvbm5lY3Rvci1jdXJ2YXR1cmU9IjAiIC8+PC9jbGlwUGF0aD48Y2xpcFBhdGgKICAgICAgIGlkPSJjbGlwUGF0aDYwIj48cGF0aAogICAgICAgICBkPSJNIDAsNzkyIDEyMjQsNzkyIDEyMjQsMCAwLDAgMCw3OTIgeiIKICAgICAgICAgaWQ9InBhdGg2MiIKICAgICAgICAgaW5rc2NhcGU6Y29ubmVjdG9yLWN1cnZhdHVyZT0iMCIgLz48L2NsaXBQYXRoPjxjbGlwUGF0aAogICAgICAgaWQ9ImNsaXBQYXRoNzgiPjxwYXRoCiAgICAgICAgIGQ9Im0gMCwwIDEyMjQsMCAwLDc5MiBMIDAsNzkyIDAsMCB6IgogICAgICAgICBpZD0icGF0aDgwIgogICAgICAgICBpbmtzY2FwZTpjb25uZWN0b3ItY3VydmF0dXJlPSIwIiAvPjwvY2xpcFBhdGg+PC9kZWZzPjxnCiAgICAgdHJhbnNmb3JtPSJtYXRyaXgoLTEuMDk0MTQ3NSwwLDAsLTAuNjMxNTA5NzIsNDg0LjA1NzczLDE4OC4zOTkzMykiCiAgICAgaWQ9ImcxMCI+PGcKICAgICAgIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQyNC42MDY4LDI4NC41NzgxKSIKICAgICAgIGlkPSJnMjA4IgogICAgICAgc3R5bGU9ImZpbGw6IzIxNGY4ZjtmaWxsLW9wYWNpdHk6MSI+PHBhdGgKICAgICAgICAgZD0iTSAwLDAgMTUuMjAzLC0xMy4yMDUgMCwtMjYuMzQ0IGwgMCw2LjI5NiAtMTEuOTk3LDAgMCwxMy42NDUgTCAwLC02LjQwMyAwLDAgWiIKICAgICAgICAgaWQ9InBhdGgyMTAiCiAgICAgICAgIHN0eWxlPSJmaWxsOiMyMTRmOGY7ZmlsbC1vcGFjaXR5OjE7c3Ryb2tlOiMyMTRmOGY7c3Ryb2tlLXdpZHRoOjAuODAwMDAwMDE7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7c3Ryb2tlLW1pdGVybGltaXQ6NDtzdHJva2UtZGFzaGFycmF5Om5vbmU7c3Ryb2tlLW9wYWNpdHk6MSIKICAgICAgICAgaW5rc2NhcGU6Y29ubmVjdG9yLWN1cnZhdHVyZT0iMCIgLz48L2c+PC9nPjxwYXRoCiAgICAgc3R5bGU9ImZpbGw6I2ZmZmZmZiIKICAgICBkPSJtIDE5LjgwMDgyMSwyMy41NTUxMyAwLC0yLjA5Mzg4NCA2LjUyMTYxMSwwIDYuNTIxNjA5LDAgMCwtNC40ODQ4NjIgMCwtNC40ODQ4NjMgLTYuNTEzNTU3LDAgLTYuNTEzNTU0LDAgLTAuMDc3NDQsLTIuMDU5MDk2IC0wLjA3NzQ0LC0yLjA1OTA5MzEgLTguNDY0MjE3LDQuMjQ2MTE2MSBjIC00LjY1NTMwMDYsMi4zMzUzNjMgLTguNTAxMDE2Miw0LjI5ODc2IC04LjU0NjAxNTUsNC4zNjMxMDQgLTAuMDY0ODc5LDAuMDkyNzcgMTMuOTAzNDU4NSw3LjE3Njc4NSAxNi41MTI5ODU1LDguMzc0NTMyIGwgMC42MzYwMjUsMC4yOTE5MjggMCwtMi4wOTM4ODIgeiIKICAgICBpZD0icGF0aDMwNzciCiAgICAgaW5rc2NhcGU6Y29ubmVjdG9yLWN1cnZhdHVyZT0iMCIgLz48L3N2Zz4=" /></div>
+                            <div class="inv-cell flex"></div>
+                            <div class="inv-cell flex"></div>
+                            <div class="inv-cell flex"></div>
+                        </div>
+                        <div class="inv-container">
+                            <div class="inv-row flex">
+                                <div id="inv-11" class="inv-cell flex"></div>
+                                <div id="inv-12" class="inv-cell flex"></div>
+                                <div id="inv-13" class="inv-cell flex"></div>
+                                <div id="inv-14" class="inv-cell flex"></div>
+                            </div>
+                            <div class="inv-row flex">
+                                <div id="inv-21" class="inv-cell flex"></div>
+                                <div id="inv-22" class="inv-cell flex"></div>
+                                <div id="inv-23" class="inv-cell flex"></div>
+                                <div id="inv-24" class="inv-cell flex"></div>
+                            </div>
+                            <div class="inv-row flex">
+                                <div id="inv-31" class="inv-cell flex"></div>
+                                <div id="inv-32" class="inv-cell flex"></div>
+                                <div id="inv-33" class="inv-cell flex"></div>
+                                <div id="inv-34" class="inv-cell flex"></div>
+                            </div>
+                            <div class="inv-row flex">
+                                <div id="inv-41" class="inv-cell flex"></div>
+                                <div id="inv-42" class="inv-cell flex"></div>
+                                <div id="inv-43" class="inv-cell flex"></div>
+                                <div id="inv-44" class="inv-cell flex"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

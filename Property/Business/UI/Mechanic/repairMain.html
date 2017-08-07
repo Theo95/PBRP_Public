@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script type="text/javascript" src="../../../../res/jquery-3.1.1.min.js"></script>
+    <link href="../../../../res/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../../../res/style.css" rel="stylesheet" />
+
+    <style>
+        .col-md-3 {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.85) 41%,rgba(63,63,63,0.85) 70%,rgba(229,229,229,0) 100%);
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            color: white;
+        }
+
+        .repair-menu-button {
+            padding: 1.5vw 0vw;
+            font-size:2vw;
+        }
+
+        .repair-menu-button:hover {
+            background-color:white;
+            color:black;
+        }
+
+        .repair-menu-header {
+            padding:1.2vw 0vw;
+            font-size:1.9vw;
+            font-family:'Lucida Handwriting';
+        }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+            setTimeout(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            }, 1500);
+        });
+
+        function setVehicleNameHeader(name)
+        {
+            $(".repair-menu-header").text(name);
+        }
+
+        function vehicleDamageData(health, body, tyres)
+        {
+            if (health > 998) {
+                $("#engine-repair").css("color", "grey");
+                $("#engine-repair").off("click");
+            }
+            if (body > 998) {
+                $("#body-repair").css("color", "grey");
+                $("#body-repair").off("click");
+            }
+            if (!tyres) {
+                $("#tyres-repair").css("color", "grey");
+                $("#tyres-repair").off("click");
+            }
+        }
+
+        function onRepairClick()
+        {
+            $('.repair-main').show();
+            $('.main').hide(); 
+        }
+        
+    </script>
+</head>
+    <body style="background-color:transparent">
+        <div class="row">
+            <div class="col-md-9"></div>
+            <div class="main col-md-3">
+                <div class="container text-center" style="height: 40vw">
+                    <div class="row repair-menu-header"></div>
+                    <hr style="margin: 0 -1.2vw"/>
+                    <div class="row repair-menu-button" onclick="onRepairClick()">REPAIR</div>
+                    <div class="row repair-menu-button">RESPRAY</div>
+                    <div class="row repair-menu-button">MODIFICATION</div>
+                    <div class="row repair-menu-button" onclick="resourceCall('exitRepairShop')">EXIT</div>
+                </div>
+            </div>
+            <div class="repair-main col-md-3" hidden>
+                <div class="container text-center" style="height: 40vw">
+                    <div class="row repair-menu-header"></div>
+                    <hr style="margin: 0 -1.2vw" />
+                    <div id="engine-repair" class="row repair-menu-button" onclick="resourceCall('performGarageRepair', 1)">ENGINE</div>
+                    <div id="body-repair" class="row repair-menu-button" onclick="resourceCall('performGarageRepair', 2)" >BODY</div>
+                    <div id="tyres-repair" class="row repair-menu-button" onclick="resourceCall('performGarageRepair', 3)">TYRES</div>
+                    <div class="row repair-menu-button" onclick="resourceCall('exitRepairShop')">EXIT</div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

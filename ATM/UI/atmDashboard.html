@@ -1,0 +1,310 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="../../res/jquery-3.1.1.min.js"></script>
+    <link href="../../res/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../res/style.css" rel="stylesheet" />
+
+    <script type="text/javascript">
+        var playerName = "";
+        var pin = "";
+        var firstPin = "";
+        var type = -1;
+        function numberButtonPressed(number)
+        {
+            if (number === -2) {
+                if (type === 1) {
+                    resourceCall("withdrawMoney", $('#atm-pin').text());
+                    $('#atm-pin').clear();
+                } else if (type === 2) {
+                    OnClickOption("SET");
+                } else if (type === 3) {
+                    if (pin.length === 4) {
+                        if (pin === firstPin) {
+                            resourceCall("atmChangePin", pin);
+                            return;
+                        }
+                    }
+                    $('#changepin-header')
+                        .html(
+                            "<span style='margin-top: -1.4vw;'><span style='color:#f00'>PIN DIDN'T MATCH</span><br/>ENTER NEW PIN:</span>");
+                    $('#changepin-header').text("SET");
+                }
+                return;
+            }
+            else if (number === -1) {
+              
+                pin = pin.slice(0, -1);
+                if (type === 1) {
+                    $('#atm-pin').text(pin);
+                }
+                else if(type === 2 || type === 3)
+                    $('#atm-pin').text(pin.replace(/./gi, '*'));
+                return;
+            }
+            else if (number > 9) {
+                number = String.fromCharCode(number);
+            }
+            pin = pin + number;
+            if(type === 1)
+                $('#atm-pin').text(pin);
+            else if (type === 2 || type === 3)
+                $('#atm-pin').text(pin.replace(/./gi, '*'));
+            
+        }
+
+        function OnDashboardLoad(url)
+        {
+            $('#atm-screen-data').load(url);
+        }
+
+        function InjectPlayerName(name, cardNumber)
+        {
+            playerName = name;
+            $('#atm-player-name').html(playerName + "<span style='font-size:14px;'><br/>" + cardNumber.replace(/[^\dA-Z]/g, '').replace(/(.{4})/g, '$1 ').trim() +" </span>");
+        }
+
+        function WithdrawError(erroMsg) {
+            setTimeout(function (errorMsg) {
+                $('#withdraw-data').append("<br/>" + errorMsg);
+            }, 2500);
+
+            $('#withdrawErrorMsg').fadeOut("fast", function () {
+                $('#withdrawErrorMsg').html('');
+            });
+        }
+
+        function ShowBalance(balance)
+        {
+            $('#atm-balance-text').html(balance);
+        }
+        function OnClickOption(option) {
+            var optionValue = $('#screenOption' + option).text();
+
+            if (optionValue === "CANCEL")
+            {
+                resourceCall("closeATM");
+            }
+            else if (optionValue === "BALANCE")
+            {
+                resourceCall("requestBalance");
+            }
+            else if (optionValue === "CHANGE PIN")
+            {
+                OnDashboardLoad("atmChangePin.html");
+                resourceCall("enableATMTyping");
+                type = 2;
+            }
+            else if (optionValue === "WITHDRAW")
+            {
+                OnDashboardLoad("atmWithdraw.html");
+                resourceCall("enableATMTyping");
+                type = 1;
+            }
+            else if (optionValue === "STATEMENT")
+            {
+                OnDashboardLoad("atmStatement.html");
+            }
+            else if (optionValue == "BACK")
+            {
+                OnDashboardLoad("atmDash.html");
+            }
+            else if (optionValue == "OK")
+            {
+                resourceCall("withdrawMoney", $('#atm-pin').text());
+            }
+            else if (optionValue == "SET")
+            {
+                if (pin.length == 4)
+                {
+                    $('#changepin-header').text("CONFIRM NEW PIN:");
+                    $('#screenOption6').text("CONFIRM");
+                    firstPin = pin;
+                    pin = "";
+                    type = 3;
+
+                    $('#atm-pin').text(pin);
+                }
+            }
+            else if (optionValue == "CONFIRM")
+            {
+                if (pin.length == 4)
+                {
+                    if (pin == firstPin)
+                    {
+                        resourceCall("atmChangePin", pin);
+                        return;
+                    }
+                }
+
+                $('#changepin-header').html("<span style='margin-top: -1.5vw; line-height:1.1vw;'><span style='font-size:1.1vw; color:#f00'>PIN DIDN'T MATCH</span><br/>ENTER NEW PIN:</span>");
+                $('#screenOption6').text("SET");
+            }
+        }
+    </script>
+</head>
+    <body style="background-color: transparent;">
+        <div class="container">
+            <div id="main-con" style="height:100%; width:100%;">
+                <div class="row" style="height:2.5vw;"></div>
+                <div class="row" style="text-align:center; margin:0; height:44%">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-1">
+                        <div class="row option-spacer pull-right">
+                        </div>
+                        <div id="optionNone" class="row option-button pull-right" style="margin-right:38%;">
+                        </div>
+                        <div class="row option-spacer pull-right">
+                        </div>
+                        <div id="option1" class="row option-button pull-right" style="margin-right:36%;" onclick="OnClickOption(1)">
+                        </div>
+                        <div class="row option-spacer pull-right">
+                        </div>
+                        <div id="option3" class="row option-button pull-right" style="margin-right:35%; margin-top:40%" onclick="OnClickOption(3)">
+                        </div>
+                        <div class="row option-spacer pull-right">
+                        </div>
+                        <div id="option5" class="row option-button pull-right" style="margin-right:35%;" onclick="OnClickOption(5)">
+                        </div>
+                        <div class="row option-spacer pull-right">
+                        </div>
+                    </div>
+                    <div class="col-md-4 atm-screen atm-container" style="width:32.7vw; padding: 0.5% 1%;">
+                        <div style="height:2%"></div>
+                        <img width="35%" style="margin-left:-55%" src="data:image/png;base64,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"/>
+                        <div id="atm-player-name" style="text-align:right; margin-top:-5%; line-height:1.3vw"><span style="font-size:0.9vw;"><br/></span></div>
+                        <table id="atm-screen-data" style="height:70%; width:100%; margin-top:6%; margin-bottom:-40%;">
+                           
+
+                        </table>
+                    </div>
+                    <div class="col-md-1" style="margin:0; margin-top:-10px;">
+                        <div class="row option-spacer">
+           
+                        </div>
+                        <div id="optionNone" class="row option-button">
+     
+                        </div>
+                        <div class="row option-spacer">
+         
+                        </div>
+                        <div id="option2" class="row option-button" onclick="OnClickOption(2)">
+                        </div>
+                        <div class="row option-spacer">
+
+                        </div>
+                        <div id="option4" class="row option-button" style="margin-top:40%" onclick="OnClickOption(4)">
+
+                        </div>
+                        <div class="row option-spacer">
+
+                        </div>
+                        <div id="option6" class="row option-button" onclick="OnClickOption(6)">
+
+                        </div>
+                        <div class="row option-spacer">
+
+                        </div>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2" style="height:40%; margin-top:1vw;">
+                      
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+                <div class="row" style="height:20.2%">
+
+                </div>
+                <div class="row" style="margin:0; margin-left:-7.2%; margin-bottom: -6vw;">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-3">
+                        <table style="transform:perspective(47vw) rotateX(42deg) skewX(-10deg); margin-top:0.3vw; margin-bottom:-4vw">
+                            <tr class="atm-row">
+                                <td>
+                                    <div id="1" class="atm-button" onclick="numberButtonPressed(1)">
+                                        <div class="atm-number">1</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div id="2" class="atm-button" onclick="numberButtonPressed(2)">
+                                        <div class="atm-number">2</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div id="3" class="atm-button" onclick="numberButtonPressed(3)">
+                                        <div class="atm-number">3</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="atm-button atm-number" style="font-size:0.7vw; color:#f00" onclick="resourceCall('closeATM')">CANCEL</div>
+                                </td>
+                            </tr>
+                            <tr class="atm-row">
+                                <td>
+                                    <div id="4" class="atm-button" onclick="numberButtonPressed(4)">
+                                        <div class="atm-number">4</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div id="5" class="atm-button" onclick="numberButtonPressed(5)">
+                                        <div class="atm-number">5</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div id="6" class="atm-button" onclick="numberButtonPressed(6)">
+                                        <div class="atm-number">6</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="atm-button atm-number"  style="font-size:0.7vw; color:#ffd800" onclick="numberButtonPressed(-1)">CLEAR</div>
+                                </td>
+                            </tr>
+                            <tr class="atm-row">
+                                <td>
+                                    <div id="7" class="atm-button" onclick="numberButtonPressed(7)">
+                                        <div class="atm-number">7</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div id="8" class="atm-button" onclick="numberButtonPressed(8)">
+                                        <div class="atm-number">8</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div id="9" class="atm-button" onclick="numberButtonPressed(9)">
+                                        <div class="atm-number">9</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="atm-button atm-number" style="font-size:0.7vw; color:#0f0" onclick="numberButtonPressed(-2)">RETURN</div>
+                                </td>
+                            </tr>
+                            <tr class="atm-row">
+                                <td>
+                                    <div id="asterisk" class="atm-button">
+                                        <div class="atm-number">*</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div id="0" class="atm-button" onclick="numberButtonPressed(0)">
+                                        <div class="atm-number">0</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div id="hash" class="atm-button">
+                                        <div class="atm-number">#</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="atm-button"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,6 @@
+﻿namespace PBRP
+{
+    class BusinessGeneralCommands {
+
+    }
+}

@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script type="text/javascript" src="../../res/jquery-3.1.1.min.js"></script>
+    <link href="../../res/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../res/style.css" rel="stylesheet" />
+    <style>
+        .btn-default {
+            padding: 6px 6px;
+        }
+
+        .sizing-box {
+            height: 1.5vw;
+            width: 2vw;
+        }
+
+        .signal-bars {
+            display: inline-block;
+        }
+
+            .signal-bars .bar {
+                width: 13%;
+                margin-left: -0.1vw;
+                min-height: 16%;
+                display: inline-block;
+            }
+
+                .signal-bars .bar.first-bar {
+                    height: 20%;
+                }
+
+                .signal-bars .bar.second-bar {
+                    height: 40%;
+                }
+
+                .signal-bars .bar.third-bar {
+                    height: 60%;
+                }
+
+                .signal-bars .bar.fourth-bar {
+                    height: 80%;
+                }
+
+                .signal-bars .bar.fifth-bar {
+                    height: 99%;
+                }
+
+        .good .bar {
+            background-color: #16a085;
+            border: thin solid #12816b;
+        }
+
+        .bad .bar {
+            background-color: #e74c3c;
+            border: thin solid #a82315;
+        }
+
+        .ok .bar {
+            background-color: #f1c40f;
+            border: thin solid #d0a90c;
+        }
+
+        .four-bars .bar.fifth-bar,
+        .three-bars .bar.fifth-bar,
+        .three-bars .bar.fourth-bar,
+        .one-bar .bar:not(.first-bar),
+        .two-bars .bar:not(.first-bar):not(.second-bar) {
+            background-color: #d5d5d5;
+            border: thin solid #d5d5d5;
+        }
+    </style>
+
+    <script>
+        var playerData = null;
+        $(document).ready(function () {
+            setTimeout(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            }, 1500);
+        });
+        function LoadScoreboard(data, isAdmin) {
+            playerData = jQuery.parseJSON(data);
+            $('#scoreboard-data').empty();
+            for (var i = 0; i < playerData.length; i++) {
+               
+                $('#scoreboard-data').append("<tr id='scoreboardplayer-" + i + "'></tr>");
+            }
+            if (isAdmin)
+                $.get("scoreboardAdminActions.html", function (dataPage) {
+                    finishPop(dataPage);
+                });   
+            else
+                $.get("scoreboardPlayerActions.html", function (dataPage) {
+                    finishPop(dataPage);
+                });   
+        }
+
+        function finishPop(pageHtml) {
+            for (var i = 0; i < playerData.length; i++) {
+                $('#scoreboardplayer-' + i).append(pageHtml);
+                $('#scoreboardplayer-' + i + ' #scoreboard-id').text(playerData[i].realId);
+                $('#scoreboardplayer-' + i + ' #scoreboard-name').text(playerData[i].Username.toString().replace("_", " "));
+                $('#scoreboardplayer-' + i + ' #scoreboard-level').text(playerData[i].Level);
+                if (playerData[i].Ping < 45)
+                    $('#scoreboardplayer-' + i + ' #scoreboard-signal').addClass("good five-bars");
+                else if (playerData[i].Ping < 58)
+                    $('#scoreboardplayer-' + i + ' #scoreboard-signal').addClass("good four-bars");
+                else if (playerData[i].Ping < 69)
+                    $('#scoreboardplayer-' + i + ' #scoreboard-signal').addClass("ok three-bars");
+                else if (playerData[i].Ping < 102)
+                    $('#scoreboardplayer-' + i + ' #scoreboard-signal').addClass("ok two-bars");
+                else if (playerData[i].Ping < 140)
+                    $('#scoreboardplayer-' + i + ' #scoreboard-signal').addClass("bad two-bars");
+                else
+                    $('#scoreboardplayer-' + i + ' #scoreboard-signal').addClass("bad one-bar");
+
+                $('#scoreboardplayer-' + i + ' #scoreboard-kick').attr("id", 'scoreboard-kick-' + playerData[i].realId);
+                $('#scoreboardplayer-' + i + ' #scoreboard-teleport').attr("id", 'scoreboard-teleport-' + playerData[i].realId);
+                $('#scoreboardplayer-' + i + ' #scoreboard-spec').attr("id", 'scoreboard-spec-' + playerData[i].realId);
+
+                $('#scoreboardplayer-' + i + ' #scoreboard-kick-' + playerData[i].realId).click(function () {
+                    var id = $(this).attr("id").replace('scoreboard-kick-', '');
+                    resourceCall('kickPlayer', id);
+                });
+
+                $('#scoreboardplayer-' + i + ' #scoreboard-teleport-' + playerData[i].realId).click(function () {
+                    var id = $(this).attr("id").replace('scoreboard-teleport-', '');
+                    resourceCall('teleportToPlayer', id);
+                });
+                $('#scoreboardplayer-' + i + ' #scoreboard-spec-' + playerData[i].realId).click(function () {
+                    var id = $(this).attr("id").replace('scoreboard-spec-', '');
+                    resourceCall('specPlayer', id);
+                });
+                
+            }
+        }
+    </script>
+</head>
+
+<body style="background-color:transparent">
+    <div class="row" style="margin:0;margin-top:8vw;">
+        <div class="col-md-4" style="width:29.1666666666%"></div>
+        <div class="scoreboard-main col-md-5">
+            <div class="scoreboard-header">
+                <div class="scoreboard-hotlinks">
+                    <button class="btn-default btn">Admin Control Panel</button> 
+                    <button class="btn-default btn" style="border:0;" data-toggle="tooltip" data-placement="bottom" title="Settings" onclick="resourceCall('showSettings')"><span class="glyphicon glyphicon-cog"></span></button>
+                    <button class="btn-default btn" style="border:0;" data-toggle="tooltip" data-placement="bottom" title="Logout" onclick="resourceCall('userLogout')"><span class="glyphicon glyphicon-log-out"></span></button>
+                </div>
+            </div>
+            <div class="scoreboard-body">
+                <table id="scoreboard" class="table table-striped">
+                    <thead>
+                        <tr>
+                    <th style="width:10%;">ID</th>
+                    <th style="width:30%">Player Name</th>
+                    <th style="width:15%;">Level</th>
+                    <th>Actions</th>
+                    <th class="text-center" style="width:15%">Connection</th></tr>
+                    </thead>
+
+                    <tbody id="scoreboard-data"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</body>
+
+</html>

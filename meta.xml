@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<meta>
+  <info name="Paleto Bay Roleplay" author="Booth" type="gamemode" async="true"/>
+  <assembly ref="System.ComponentModel.DataAnnotations.dll"/>
+  <assembly ref="System.Xml.dll"/>
+  <assembly ref="System.Net.Http.dll"/>
+  <assembly ref="System.Linq.dll"/>
+  <assembly ref="EntityFramework.dll"/>
+  <assembly ref="EntityFramework.SqlServer.dll"/>
+  <assembly ref="System.Web.Extensions.dll"/>
+  <assembly ref="Newtonsoft.Json.dll"/>
+  <assembly ref="System.Threading.Tasks.dll"/>
+  <assembly ref="CryptSharp.dll"/>
+
+  <!-- Login scripts -->
+  <script src="Login/client/login.js" type="client" lang="javascript" />
+  <file src="Login/client/login.html"/>
+  <file src="Login/client/charSelect.html"/>
+  <file src="Login/client/createNewCharacter.html"/>
+  <file src="Login/client/createCharSkinSelect.html"/>
+  <file src="Login/client/createCharSkinVars.html"/>
+  <!--<file src="res/audio/cr.mp3"/>-->
+
+  <!-- Globals -->
+
+  <script src="Globals/Payments/payments.js" type="client" lang="javascript"/>
+  <file src="Globals/Payments/globalEnterPin.html"/>
+  <file src="Globals/Payments/pin-machine.css"/>
+  
+  <!-- NPC shit -->
+
+  <!-- Admin shit -->
+
+  <script src="Administrator/adminClient.js" type="client" lang="javascript"/>
+
+  <!-- Player -->
+ <script src="Player/client/hudDisplay.js" type="client" lang="javascript"/>
+  
+  <!-- Injury -->
+  <script src="Player/Injured/injury.js" type="client" lang="javascript"/>
+  
+  <!-- Scoreboard -->
+  <script src="Scoreboard/UI/scoreboard.js" type="client" lang="javascript"/>
+  <file src="Scoreboard/UI/scoreboardMain.html"/>
+  <file src="Scoreboard/UI/scoreboardPlayerActions.html"/>
+  <file src="Scoreboard/UI/scoreboardAdminActions.html"/>
+
+  <!-- Phone -->
+  <file src="Player/Phone/UI/SmartPhone/smartHomeScreen.html"/>
+  <file src="Player/Phone/UI/SmartPhone/smartSettingsPage.html"/>
+  <file src="Player/Phone/UI/SmartPhone/smartSettingsInfo.html"/>
+  <file src="Player/Phone/UI/SmartPhone/selectSimCard.html"/>
+  <file src="Player/Phone/UI/SmartPhone/smartBootScreen.html"/>
+  <file src="Player/Phone/UI/SmartPhone/smartPhone.html"/>
+  <file src="Player/Phone/UI/SmartPhone/PhoneApp/smartPhoneHome.html"/>
+  <file src="Player/Phone/UI/SmartPhone/PhoneApp/smartPhoneDial.html"/>
+  <file src="Player/Phone/UI/SmartPhone/PhoneApp/smartPhoneCall.html"/>
+  <file src="Player/Phone/UI/SmartPhone/PhoneApp/smartPhoneRecent.html"/>
+  <file src="Player/Phone/UI/SmartPhone/PhoneApp/smartPhoneContacts.html"/>
+  <file src="Player/Phone/UI/SmartPhone/PhoneApp/smartPhoneShowContact.html"/>
+  <file src="Player/Phone/UI/SmartPhone/PhoneApp/smartPhoneNewContact.html"/>
+  <file src="Player/Phone/UI/SmartPhone/PhoneApp/smartPhoneEditContact.html"/>
+  <file src="Player/Phone/UI/SmartPhone/LockScreen/smartPhoneLockScreen.html"/>
+  <script src="Player/Phone/UI/phone.js" type="client" lang="javascript"/>
+  <file src="Player/Phone/UI/SmartPhone/PhoneApp/phoneapp.js"/>
+
+  <file src="Player/Phone/UI/SmartPhone/MessagesApp/smartMessagesHome.html"/>
+  <file src="Player/Phone/UI/SmartPhone/MessagesApp/smartMessagesConvo.html"/>
+  <file src="Player/Phone/UI/SmartPhone/MessagesApp/smartMessagesCompose.html"/>
+  <file src="Player/Phone/UI/SmartPhone/MessagesApp/messageapp.js"/>
+
+
+  <!-- Bank -->
+  <script src="Bank/UI/bank.js" type="client" lang="javascript" />
+  <file src="Bank/UI/bankOption.html"/>
+  <file src="Bank/UI/bankChooseID.html"/>
+  <file src="Bank/UI/enterPin.html"/>
+  <file src="Bank/UI/transactionOptions.html"/>
+  <file src="Bank/UI/createNewAccount.html"/>
+
+  <!-- ATM -->
+  <script src="ATM/UI/atm.js" type="client" lang="javascript"/>
+  <file src="ATM/UI/atmInsertCard.html"/>
+  <file src="ATM/UI/atmEnterPin.html"/>
+  <file src="ATM/UI/atmDashboard.html"/>
+  <file src="ATM/UI/atmDash.html"/>
+  <file src="ATM/UI/atmBalance.html"/>
+  <file src="ATM/UI/atmWithdraw.html"/>
+  <file src="ATM/UI/atmChangePin.html"/>
+
+  <!-- Inventory -->
+  <script src="UI/Inventory/inventory.js" type="client" lang="javascript"/>
+  <file src="UI/Inventory/inventory-inline.js"/>
+  <file src="UI/Inventory/inventory.css"/>
+  <file src="UI/Inventory/inventoryHome.html"/>
+  <file src="UI/Inventory/inventoryActions.html"/>
+  <file src="UI/Inventory/inventoryFrisk.html"/>
+  <file src="UI/Inventory/inventoryTrunk.html"/>
+  
+  <!-- InteractionMenu-->
+  <file src="UI/InteractionMenu/menu.html"/>
+  <file src="UI/InteractionMenu/menu.css"/>
+  <script src="UI/InteractionMenu/interactionMenu.js" type="client" lang="javascript"/>
+
+  <!-- Vehicle -->
+  <script src="Vehicle/vehicleStreamInOut.js" type="client" lang="javascript"/>
+
+  <script src="Vehicle/Dealership/vehdealer.js" type="client" lang="javascript"/>
+  <file src="Vehicle/Dealership/vehdealer-book.html"/>
+  <file src="Vehicle/Dealership/vehPage.html"/>
+  <file src="Vehicle/Dealership/dealerPreviewPanel.html"/>
+  
+  <!--<file src="Vehicle/client/dashboard.html"/>
+  <script src="Vehicle/client/Dashboard.js" type="client" lang="javascript"/>
+  <file src="Vehicle/client/d3gauge.js"/>
+  <file src="Vehicle/client/d3.v2.js"/>-->
+  <file src="Vehicle/DrivingTest/Client/testinterface.html"/>
+  <script src="Vehicle/DrivingTest/Client/drivingtest.js" type="client" lang="javascript"/>
+  <file src="Vehicle/DrivingTest/Client/testreport.html"/>
+  <file src="Vehicle/DrivingTest/Client/res/highway.ttf"/>
+  <file src="Vehicle/DrivingTest/Client/res/testReportStyle.css"/>
+  <file src="Vehicle/DrivingTest/Client/testmenu.html"/>
+  
+  <script src="Vehicle/Fuel/fuel.js" type="client" lang="javascript"/>
+
+  <!-- UI -->
+  <file src="Player/client/notification.html" />
+  <file src="Player/client/notification.css" />
+  
+  <!--Settings-->
+  <file src="UI/Settings/settingsMain.html"/>
+  <file src="UI/Settings/settingsPerformance.html"/>
+
+  <!-- Resources -->
+  <file src="res/jquery-3.1.1.min.js" />
+  <file src="res/jquery.minicolors.min.js"/>
+  <file src="res/jquery.minicolors.css"/>
+  <file src="res/jquery.minicolors.png"/>
+  <file src="res/css/bootstrap.min.css" />
+  <file src="res/bootstrap.min.js" />
+  <file src="res/style.css"/>
+  <file src="res/createNewChar.png"/>
+  <file src="res/alertify.min.js"/>
+  <file src="res/alertify.min.css"/>
+  <file src="res/semantic.min.css"/>
+  <file src="res/modernizr.2.5.3.min.js"/>
+  <file src="res/jquery-ui.min.css"/>
+  <file src="res/jquery-ui.min.js"/>
+  <file src="res/jquery-ui.theme.min.css"/>
+  <file src="res/jquery-ui.structure.min.css"/>
+  <file src="res/turn.js"/>
+  <file src="res/jquery.min.1.7.js"/>
+  <file src="res/vehdealer-book.css"/>
+
+  <file src="res/fonts/glyphicons-halflings-regular.ttf"/>
+  <file src="res/fonts/glyphicons-halflings-regular.eot"/>
+  <file src="res/fonts/glyphicons-halflings-regular.svg"/>
+  <file src="res/fonts/glyphicons-halflings-regular.woff"/>
+  <file src="res/fonts/glyphicons-halflings-regular.woff2"/>
+  <file src="res/test.png"/>
+
+  <!-- Models -->
+
+  <!--Business Scripts-->
+  <file src="Property/Business/UI/Shop/shop.css"/>
+  <file src="Property/Business/UI/Shop/shopMain.html"/>
+  <file src="Property/Business/UI/Mechanic/repairMain.html"/>
+  <file src="Property/Business/UI/Mechanic/vehicleListGarage.html"/>
+  <script src="Property/Business/UI/business.js" type="client" lang="javascript"/>
+
+  <!-- Sidejobs -->
+  <script src="Sidejobs/Client/sidejob.js" type="client" lang="javascript"/>
+  <script src="Sidejobs/Client/Fishing.js" type="client" lang="javascript"/>
+   
+  <file src="Sidejobs/Client/left.png"/>
+  <file src="Sidejobs/Client/right.png"/>
+  
+  <script src="Sidejobs/Hunting/hunting.js" type="client" lang="javascript"/>
+
+  
+  <!-- Skills -->
+  <script src="Skills/Weapon/skill_effects.js" type="client" lang="javascript"/>
+  
+  <file src="res/fonts/Roboto-Regular.ttf" />
+  <file src="res/fonts/Roboto-Thin.ttf" />
+  
+  <!-- Emergency Calls-->
+  <script src="Factions/EmergencyCallHandler/EmergencyCallHandler.js" type="client" lang="javascript"/>
+  <file src="Factions/EmergencyCallHandler/callTypeSelector.html"/>
+  <file src="Factions/EmergencyCallHandler/callTypeSelector.css"/>
+  
+  <!-- Utils -->
+  <script src="Utilities/utils.js" type="client" lang="javascript"/>
+    
+    
+  <script src="bin/Debug/PBRP.dll" type="server" lang="compiled"/>
+</meta>

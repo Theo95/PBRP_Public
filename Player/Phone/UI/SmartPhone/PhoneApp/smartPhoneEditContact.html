@@ -1,0 +1,41 @@
+﻿<div id="phone-ui">
+    <table style="min-height:100%; width: 100%;">
+        <tbody id="recentcall-list">
+            <tr class="phonecontacts-header">
+                <td style="width:10%;"><i class="hidden" id="contact-id"></i></td>
+                <td class="text-center" style="font-weight:bold; font-size: 0.65vw;">Edit Contact</td>
+                <td class="text-right" style="width:10%; padding-right:0.4vw;"><span onclick="UpdateContact()" class="glyphicon glyphicon-floppy-disk"></span></td>
+            </tr>
+            <tr style="height:1.6vw;">
+            <tr>
+                <td style="width:4%;"></td>
+                <td><input class="form-control bottom-border-only" id="newcontact-name" maxlength="24" placeholder="Full Name" required/></td>
+                <td style="width:4%;"></td>
+            </tr>
+
+            <tr>
+                <td style="width:4%;"></td>
+                <td><input class="form-control bottom-border-only" id="newcontact-number" maxlength="24" type="number" placeholder="Phone Number" required/></td>
+                <td style="width:4%;"></td>
+            </tr>
+            <tr style="height:0.6vw;"><td></td></tr>
+            <tr>
+                <td style="width:4%;"></td>
+                <td>
+                    <div class="form-group">
+                        <input class="form-control bottom-border-only" id="newcontact-address-1" maxlength="32" placeholder="Address 1" />
+                        <input class="form-control bottom-border-only" id="newcontact-address-2" maxlength="32" placeholder="Address 2" />
+                        <input class="form-control bottom-border-only" id="newcontact-address-3" maxlength="32" placeholder="Address 3" />
+                    </div>
+                </td>
+                <td style="width:4%;"></td>
+            </tr>
+            <tr>
+                <td style="width:4%;"></td>
+                <td><textarea class="form-control bottom-border-only" id="newcontact-notes" maxlength="64" placeholder="Add notes"></textarea></td>
+                <td style="width:4%;"></td>
+            </tr>
+            <tr style="min-height:0.6vw;"><td></td></tr>
+        </tbody>
+    </table>
+</div>

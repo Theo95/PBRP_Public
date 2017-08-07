@@ -1,0 +1,33 @@
+﻿<div id="phone-ui">
+    <div id="messages-list" style="width: 100%;">
+        <div class="phonecontacts-header">
+            <div class="col-md-12 text-center" style="font-weight:bold; font-size: 0.55vw;">
+                <div id="messagecompose-contactheader" style="line-height:1.6vw; font-size:0.7vw;">
+                    <span id="messagecompose-contactname" style="padding:0 0.4vw;"> </span><i id="messagecompose-contactnumber" class="hidden"></i>
+                    <span onclick="showContactSearch()" class="glyphicon glyphicon-remove-circle"></span>
+                </div>
+                <div id="messagecompose-contactsearch" class="input-group has-feedback" style="width:9vw; margin:0.3vw auto;">
+                    <input id="messagecompose-contact" onfocus="resourceCall('onMessageFocus', true)" onblur="resourceCall('onMessageFocus', false)" placeholder="Number or contact name.." maxlength="32" 
+                           style="max-width:8vw; max-height:4vw; width:8vw; padding-right:1vw;" />
+
+                    <div class="input-group-btn">
+                        <button class="btn" style="font-size:0.5vw; padding:2px; width:1vw; margin-left:-2vw; color:#000" onclick="onContactSelected('')"><span class="glyphicon glyphicon-arrow-right"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="height:1.6vw"></div>
+        <div id="messageconvo-list" style="width:100%;">
+
+        </div>
+        <div style="height:1.6vw"></div>
+    </div>
+    <div class="row messageconvo-input">
+        <div class="input-group has-feedback" style="width:9vw; margin:0.3vw auto;">
+            <input onfocus="resourceCall('onMessageFocus', true)" disabled="disabled" onblur="resourceCall('onMessageFocus', false)" id="messageconvo-messagebox" placeholder="Enter message.." maxlength="64" style="width:9vw; padding-right:1vw;" />
+            <div class="input-group-btn">
+                <button class="btn" id="messageconvo-send" style="font-size:0.5vw; padding:2px; width:1vw; margin-left:-1vw; color:#000" onclick="sendNewMessage()"><span class="glyphicon glyphicon-arrow-up"></span></button>
+            </div>
+        </div>
+    </div>
+</div>
